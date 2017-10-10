@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<html lank="es">
+
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -9,11 +11,43 @@
 		
 	</head>
 	<body>
+		<div class="container">
+			<form>
+ 				<div class="form-group">
+				<label for="exampleInputEmail1">Email address</label>
+					<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+					<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  				</div>
+ 			<div class="form-group">
+				<label for="exampleInputPassword1">Password</label>
+    			<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+			</div>
+			<div class="form-check">
+				<label class="form-check-label">
+				<input type="checkbox" class="form-check-input">
+				Check me out
+				</label>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
 		Nombre: <input type = "text" id = "nombre"><br>
 		Numero de jugadores: <input type = "number" id = "numero"><br>
 		<button onclick = "crearPartida()">Crear</button><br>
 		<button onclick = "unirse()">Unirse</button>
 		<script src="scripts/partidas.js"></script>
+		
+		<!-- Ejemplo como usar jquery -->
+		<script>
+			$(document.body).append($("<button id='btnClick'>Clícame</button>"));
+			$("#btnClick").attr("onclick","crearBoton()");
+			fuction(){
+				$(document.body).append("<button id='btnClick'>Clícame</button>"):
+			}
+		</script>
+		
+		
+		
 	</body>
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.js"></script>
