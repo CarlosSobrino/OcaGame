@@ -19,6 +19,7 @@ Tablero.prototype.crearCasillas = function(){
 		this.casillas[i].y0=350-50;
 	    this.casillas[i].xF = this.casillas[i].x0+50;
 	    this.casillas[i].yF = this.casillas[i].y0+50;
+	    this.casillas[i].crearCirculo();
 	}
 	
 	
@@ -26,4 +27,8 @@ Tablero.prototype.crearCasillas = function(){
 
 function Casilla(){
 	this.tipo="NORMAL";
+}
+
+Casilla.prototype.crearCirculo = fuction (){
+	this.rectangulo = document.createElementNS("https://www.w3.org/2000/svg","rectangle");
 }
