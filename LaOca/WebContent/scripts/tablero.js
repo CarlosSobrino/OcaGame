@@ -2,6 +2,11 @@ function Tablero(){
 	this.casillas=[];
 	crearCasillas();
 }
+Tablero.prototype.dibujar = function(lienzo){
+	 for(var i=0; i<9; i++){
+	  this.casillas[i].dibujar(lienzo);
+	}
+}
 
 // 350 de alto, 450 de ancho, a 50,50 por casilla
 //5,9,14,18,23,27,32,36,41,45,54,59 --> casillas tipo oca
@@ -29,6 +34,21 @@ function Casilla(){
 	this.tipo="NORMAL";
 }
 
-Casilla.prototype.crearCirculo = fuction (){
-	this.rectangulo = document.createElementNS("https://www.w3.org/2000/svg","rectangle");
+Casilla.prototype.crearCirculo = function (){
+	this.rectangulo = document.createElementNS("https://www.w3.org/2000/svg","rect");
+	this.rectangulo.setAttributeNS("x",this.x0);
+	this.rectangulo.setAttributeNS("y",this.y0);
+	this.rectangulo.setAttributeNS("width", 50);
+	this.rectangulo.setAttributeNS("height", 50);
+	this.rectangulo.setAttributeNS("stroke","green");
+	this.rectangulo.setAttributeNS("stroke-width","4");
+	this.rectangulo.setAttributeNS("fill","rgb(100,100,100)");
+}
+
+Casilla.prototype.crearCirculo = function (){
+	
+}
+
+Casilla.prototype.dibujar = function (){
+	lienzo.appendChild(this.rectangulo);
 }
