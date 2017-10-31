@@ -1,0 +1,10 @@
+Para pruebas de carga
+
+1) Crear y lanzar un proxy ej: 8888
+2) Redirigir el trafico http al proxy
+3) Ejecutamos uno o varios escenariosy los recge el jmeter
+4) parar el proxy
+5) creamos los planes de pruebas con los hilos y los escaneos grabados por el proxy
+6) ejecutamos el plan de prebas
+7) análisis de resultados
+8) modificar el sistema acorde con los resultados para mejorarlo
