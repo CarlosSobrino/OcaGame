@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lank="es">
-
+<html lang="en">
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>** La Oca **</title>
+		<title>La Oca</title>
 		<!-- Bootstrap Core CSS -->
 		<link href="css/bootstrap.css" rel="stylesheet">
 		<link href="css/boostrap.min.css" rel="stylesheet">
 		
 	</head>
 	<body>
+	<div class="page-header">
+  		<h1 class="text-primary">Login</h1>
+	</div>
 		<div class="container">
 			<form>
  				<div class="form-group">
@@ -22,21 +24,11 @@
 				<label for="exampleInputPassword1">Password</label>
     			<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
 			</div>
-			<div class="form-check">
-				<label class="form-check-label">
-				<input type="checkbox" class="form-check-input">
-				Check me out
-				</label>
-			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-primary" onclick="login()">
+				Submit
+			</button>
 			</form>
-		</div>
-		Nombre: <input type = "text" id = "nombre"><br>
-		Numero de jugadores: <input type = "number" id = "numero"><br>
-		<button onclick = "crearPartida()">Crear</button><br>
-		<button onclick = "unirse()">Unirse</button>
-		<script src="scripts/partidas.js"></script>
-		
+		</div>		
 		<!-- Ejemplo como usar jquery
 		<script type="text/javascript">
 			$(document.body).append($("<button id='btnClick'>Clícame</button>"));
@@ -52,11 +44,6 @@
 		var lienzo=document.getElementById("tablero");
 		tablero.dibujar(lienzo);
 		</script>
-		
-		
-		
-		
-		
 	</body>
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.js"></script>
