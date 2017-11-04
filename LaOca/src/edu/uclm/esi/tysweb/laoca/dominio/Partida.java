@@ -4,13 +4,13 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Partida {
-	private ConcurrentHashMap<String, Usuario> jugadores;
+	private ConcurrentHashMap<String, User> jugadores;
 	private int numeroDeJugadores;
 	private int id;
 
-	public Partida(Usuario creador, int numeroDeJugadores){
+	public Partida(User creador, int numeroDeJugadores){
 		this.jugadores = new ConcurrentHashMap<>();
-		this.jugadores.put(creador.getLogin(), creador);
+		this.jugadores.put(creador.getEmail(), creador);
 		this.numeroDeJugadores = numeroDeJugadores;
 		this.id = new Random().nextInt();
 	}
@@ -19,8 +19,8 @@ public class Partida {
 		return this.id;
 	}
 
-	public void add(Usuario usuario) {
-		this.jugadores.put(usuario.getLogin(), usuario);
+	public void add(User user) {
+		this.jugadores.put(user.getEmail(), user);
 	}
 	
 	public boolean isReady() {
