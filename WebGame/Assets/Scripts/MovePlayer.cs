@@ -6,15 +6,36 @@ public class MovePlayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        gameObject.transform.position = GameObject.Find("Casilla0").transform.position;
+        Move(0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
-    public void Move(int casilla)
+    public void Move(int n)
     {
-        gameObject.transform.position = GameObject.Find("Casilla"+casilla).transform.position;
+        GameObject casilla = GameObject.Find("Casilla" + n);
+        gameObject.transform.position = casilla.transform.position;
+        Vector3 position = new Vector3();
+        float ditanceSeparation = gameObject.transform.localScale.x / 1.8f;
+        if (gameObject.name == "Player1")
+        {
+            position = gameObject.transform.position - (casilla.transform.forward.normalized * ditanceSeparation) + (casilla.transform.right.normalized * ditanceSeparation); 
+        }
+        else if (gameObject.name == "Player2")
+        {
+            position = gameObject.transform.position - (casilla.transform.forward.normalized * ditanceSeparation) - (casilla.transform.right.normalized * ditanceSeparation); ;
+        }
+        else if (gameObject.name == "Player3")
+        {
+            position = gameObject.transform.position + (casilla.transform.forward.normalized * ditanceSeparation) + (casilla.transform.right.normalized * ditanceSeparation); ;
+        }
+        else if (gameObject.name == "Player4")
+        {
+            position = gameObject.transform.position + (casilla.transform.forward.normalized * ditanceSeparation) - (casilla.transform.right.normalized * ditanceSeparation); ;
+        }
+
+        gameObject.transform.position = position;
     }
 }
