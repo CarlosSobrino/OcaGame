@@ -1,24 +1,20 @@
 function init() {
-	var app = new PIXI.Application(800, 600, {backgroundColor : 0x1099bb});
-	document.body.appendChild(app.view);
+	var app = new PIXI.Application(800, 600, {backgroundColor : 0x1099bb}); //transparent: true
+	document.getElementById('game-container').appendChild(app.view);
+	var tablero = PIXI.Sprite.fromImage('assets/resources/tablero.jpg');
+	var scale = 2;
 
-	var container = new PIXI.Container();
+	// center the sprite's anchor point
+	tablero.anchor.set(0.5);
+	// move the sprite to the center of the screen
+	tablero.width = app.renderer.width;
+	tablero.height = app.renderer.height;
+	
+	tablero.x = app.renderer.width / 2;
+	tablero.y = app.renderer.height / 2;
+    //tablero.scale= scale;
+    
+    app.stage.addChild(tablero);
 
-	app.stage.addChild(container);
-
-	var texture = PIXI.Texture.fromImage('assets/resources/casilla.png');
-
-	// Create a 5x5 grid of bunnies
-	for (var i = 0; i < 25; i++) {
-	    var bunny = new PIXI.Sprite(texture);
-	    bunny.anchor.set(0.5);
-	    bunny.x = (i % 5) * 40;
-	    bunny.y = Math.floor(i / 5) * 40;
-	    container.addChild(bunny);
-	}
-
-	// Center on the screen
-	container.x = (app.renderer.width - container.width) / 2;
-	container.y = (app.renderer.height - container.height) / 2;
 }
 

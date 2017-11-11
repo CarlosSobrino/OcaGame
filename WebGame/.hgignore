@@ -1,0 +1,10 @@
+.vs/
+App/
+Library/
+Temp/
+UWP/
+
+syntax: glob
+*.sln
+*.csproj
+*.blend1*
