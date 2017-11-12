@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class MovePlayer : MonoBehaviour {
 
+    private int _Casilla;
 	// Use this for initialization
 	void Start () {
         Move(0);
+        _Casilla = 0;
 	}
 	
 	// Update is called once per frame
@@ -15,7 +17,8 @@ public class MovePlayer : MonoBehaviour {
 	}
     public void Move(int n)
     {
-        GameObject casilla = GameObject.Find("Casilla" + n);
+        _Casilla += n;
+        GameObject casilla = GameObject.Find("Casilla" + _Casilla);
         gameObject.transform.position = casilla.transform.position;
         Vector3 position = new Vector3();
         float ditanceSeparation = gameObject.transform.localScale.x / 1.8f;

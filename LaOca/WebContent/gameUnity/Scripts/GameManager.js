@@ -1,7 +1,9 @@
 var GameManager= {
-		MoveFicha:function(){
-			window.alert("Hello, world!");
-			gameInstance.SendMessage ('Player', 'Move', 2);
+		MoveFicha:function(player,dado){
+			player = 1;
+			dado=1;
+			
+			window.alert("Mover "+player+" "+dado+" casillas");
+			gameInstance.SendMessage ('GameManager', 'MovePlayer', "player ~ dado");
 		}
-		
 }
