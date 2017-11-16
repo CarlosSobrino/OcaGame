@@ -2,6 +2,8 @@ package edu.uclm.esi.tysweb.laoca.dominio;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import edu.uclm.esi.tysweb.laoca.presistencia.DAOUsuario;
+
 public class Manager {
 	private ConcurrentHashMap<String, User> usuarios;
 	private ConcurrentHashMap<Integer, Partida> partidasPendientes;
@@ -35,6 +37,12 @@ public class Manager {
 			this.usuarios.put(nombreJugador,  usuario);
 		}
 		return usuario;
+	}
+	
+	public void registrar(String email,String pwd) throws Exception{
+		User user = new UserRegistered();
+		user.SetEmail(email);
+		DAOUsuario.insert(email, pwd);
 	}
 	
 	public void addJugador(String nombreJugador) throws Exception{

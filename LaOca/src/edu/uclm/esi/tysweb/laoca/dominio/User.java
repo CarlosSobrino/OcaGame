@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import edu.uclm.esi.tysweb.laoca.dao.BrokerConPool;
 import edu.uclm.esi.tysweb.laoca.dao.BrokerSinPoolAbriendoYCerrando;
+import edu.uclm.esi.tysweb.laoca.presistencia.DAOUsuario;
 
 public class User {
 	private String email;
@@ -20,8 +21,18 @@ public class User {
 		this.pass = pass;
 	}
 	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
 	public String getEmail() {
 		return this.email;
+	}
+	public void SetEmail(String email) {
+		this.email = email;
+	}
+	
+	public void insert(String pass) {
+		DAOUsuario.insert(this.email,pass);
 	}
 	
 	public boolean existeConPool(String pwd) throws Exception {

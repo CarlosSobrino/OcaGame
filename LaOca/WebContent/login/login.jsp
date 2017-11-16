@@ -5,7 +5,6 @@
 <%
 String login=request.getParameter("login");
 JSONObject jso=new JSONObject(login);
-
 JSONObject respuesta=new JSONObject();
 try {
 	System.out.println(jso.toString());

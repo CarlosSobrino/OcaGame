@@ -13,7 +13,7 @@ public class MongoBroker {
 	public MongoClient mongoClient;
 	
 	private MongoBroker() {
-		this.mongoClient = new MongoClient("alarcosj.esi.uclm.es",27017);
+		this.mongoClient = new MongoClient("localhost",27017);
 	}
 	private static class MongoBrokeHolder{
 		static MongoBroker singelton = new MongoBroker();
@@ -23,7 +23,7 @@ public class MongoBroker {
 	}
 	public static void main(String [] args) {
 		MongoBroker broker = MongoBroker.get();
-		MongoDatabase db = broker.mongoClient.getDatabase("DIEGO");
+		MongoDatabase db = broker.mongoClient.getDatabase("LaOca");
 		
 		if(db.getCollection("usuarios")==null) {
 			db.createCollection("usuarios");
@@ -42,5 +42,8 @@ public class MongoBroker {
 	System.out.println(elementoBuscado.getString("email"));
 		
 		
+	}
+	public MongoDatabase getDatabase(String database){
+		return this.mongoClient.getDatabase(database);
 	}
 }
