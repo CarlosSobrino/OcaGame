@@ -21,6 +21,7 @@ public class MongoBroker {
 	public static MongoBroker get() {
 		return MongoBrokeHolder.singelton;
 	}
+	/*
 	public static void main(String [] args) {
 		MongoBroker broker = MongoBroker.get();
 		MongoDatabase db = broker.mongoClient.getDatabase("LaOca");
@@ -42,7 +43,7 @@ public class MongoBroker {
 	System.out.println(elementoBuscado.getString("email"));
 		
 		
-	}
+	}*/
 	public MongoDatabase getDatabase(String database){
 		return this.mongoClient.getDatabase(database);
 	}

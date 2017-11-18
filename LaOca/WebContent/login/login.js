@@ -1,17 +1,18 @@
+'use strict';
 function validate(){
 	var login = {
-		user : document.getElementById("user").value,
-		pass : document.getElementById("pass").value
+		email : document.getElementById("email").value,
+		pwd : document.getElementById("pwd").value
 	}
 	var request = new XMLHttpRequest();
 	request.open("post", "login/login.jsp");
 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	request.onreadystatechange = function() {
-		if(request.readyState == 4){
+		if(request.readyState === 4){
 			var respuesta = JSON.parse(request.responseText);
-			console.log(respuesta.result);
-			conectarWebSocket();
+			alert(respuesta);
+			//conectarWebSocket();
 		}
 	};
-	request.send("login="+JSON.stringify(login)); // {"user":"asdda@gasg","pass":"asd"}
+	request.send("login="+JSON.stringify(login));
 }

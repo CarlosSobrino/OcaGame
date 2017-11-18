@@ -11,14 +11,14 @@ import edu.uclm.esi.tysweb.laoca.presistencia.DAOUsuario;
 
 public class User {
 	private String email;
-	private String pass;
+	private String pwd;
 
 	public User(String email) {
 		this.email = email;
 	}
-	public User(String email, String pass) {
+	public User(String email, String pwd) {
 		this.email = email;
-		this.pass = pass;
+		this.pwd = pwd;
 	}
 	
 	public User() {
@@ -27,12 +27,15 @@ public class User {
 	public String getEmail() {
 		return this.email;
 	}
+	public String getPwd() {
+		return this.pwd;
+	}
 	public void SetEmail(String email) {
 		this.email = email;
 	}
 	
-	public void insert(String pass) {
-		DAOUsuario.insert(this.email,pass);
+	public void insert(String pwd) {
+		DAOUsuario.insert(this.email,pwd);
 	}
 	
 	public boolean existeConPool(String pwd) throws Exception {
