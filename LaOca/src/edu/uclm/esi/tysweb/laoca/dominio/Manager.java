@@ -59,7 +59,6 @@ public class Manager {
 	
 	public boolean loginSinPool(String email,String pwd) throws Exception{
 		User user=new UserRegistered(email,pwd);
-		System.out.println("login Sin Pool");
 		if(DAOUsuario.existeUser(user)){
 			this.usuarios.put(email,user);
 			return true;

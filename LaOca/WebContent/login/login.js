@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 function validate(){
 	var login = {
 		email : document.getElementById("email").value,
@@ -10,7 +10,11 @@ function validate(){
 	request.onreadystatechange = function() {
 		if(request.readyState === 4){
 			var respuesta = JSON.parse(request.responseText);
-			alert(respuesta);
+			if(respuesta.result ==="OK"){
+				alert(respuesta.mensaje);
+			}else{
+				alert(respuesta.mensaje);
+			}
 			//conectarWebSocket();
 		}
 	};

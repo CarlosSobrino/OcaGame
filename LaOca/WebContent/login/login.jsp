@@ -10,11 +10,9 @@ try {
 	String pwd=jso.getString("pwd");
 	//String tipoDeBroker=jso.getString("tipoDeBroker");
 	if(Manager.get().loginSinPool(email, pwd)){
-		System.out.println("correcto");
 		respuesta.put("result", "OK");
 		respuesta.put("mensaje", email + " conectado");
 	}else{
-		System.out.println("falso");
 		respuesta.put("result", "ERROR");
 		respuesta.put("mensaje", "Email o contraseña incorrectos");
 	}
@@ -24,7 +22,7 @@ try {
 }
 catch (Exception e) {
 	respuesta.put("result", "ERROR");
-	respuesta.put("mensaje", e.getMessage());
+	respuesta.put("mensaje", "Email o contraseña incorrectos");
 }
 out.println(respuesta.toString());
 %>
