@@ -2,22 +2,19 @@
 <html lang="es-ES">
 	<head>
 		<meta charset="UTF-8">
-		<title>La Oca</title>
+		<title>Identificarse</title>
 		<!-- Bootstrap Core CSS -->
 		<link href="../css/bootstrap.css" rel="stylesheet">
 		<link href="../css/boostrap.min.css" rel="stylesheet">
 	    <script src="../js/jquery.js"></script>
 		<script src="../js/bootstrap.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/menu.js"></script>	
 		<script src="login.js"></script>
-		<script> 
-		    $(function(){
-		      $("#includedContent").load("menu.html"); 
-		    });
-    	</script> 
+		<script src="recordar.js"></script>
 	</head>
 	<body>
-   	<div id="includedContent"></div>
+   	<div id="menu"></div>
 		<div class="container">
 			<form>
  				<div class="form-group">
@@ -31,11 +28,20 @@
     			<input type="password" class="form-control" id="pwd" placeholder="Contraseña"
     			 name="password">
 			</div>
-			<button type="submit" class="btn btn-primary" onclick="validate()">
-				Submit
-			</button>
+				<button type="submit" class="btn btn-primary" onclick="validate()">
+					Submit
+				</button>
 			</form>
-		</div>		
+ 			<div class="form-group" style ='margin: 10px 0 0 0'>
+				<div class="form-check form-check-inline" >
+				  <label class="form-check-label">
+				    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="recordar"  onchange="recordar()"> No recuerdo mi contraseña
+				  </label>
+				</div>
+				<div id=info_recordar style ='margin: 0 0 0 40px'></div>
+			</div>
+		</div>
+	
 	</body>
 
 	

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Oca</title>
+    <title>Juego</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link href="../css/bootstrap.css" rel="stylesheet">
@@ -14,34 +14,43 @@
     <script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-	<!-- Chat -->
-
+	<script src="../js/bootstrap.min.js"></script>
 	<!-- Menu -->
-    <script> 
-    $(function(){
-      $("#includedContent").load("menu.html"); 
-    });
-    </script> 
+	<script src="../js/menu.js"></script>
+	<!-- Chat -->
+	<link rel="stylesheet" href="../css/jquery-ui-1.8.2.custom.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="../js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui-1.8.2.custom.min.js"></script>
+    <link href="../css/jquery.ui.chatbox.css" rel="stylesheet">
+	<script src="../js/jquery.ui.chatbox.js"></script>
+	<script src="Scripts/chatboxManager.js"></script>
+	<script src="Scripts/Chat.js"></script>
     <script>
       var gameInstance = UnityLoader.instantiate("gameContainer", "Build/App.json", {onProgress: UnityProgress});
     </script>
   </head>
   <body>
+  <!-- MENU BAR-->
+   <div  id="menu"></div>
+  <!-- GAME -->
   <div>
-   	<div id="includedContent"></div>
  	<div>
   		<button type="button" class="btn"  onclick="GameManager.MoveFicha()">Move</button>
   	</div>
   	
   		<div style="text-align: center;">
 		    <div class="webgl-content">
-		    	<div id="gameContainer" style="width: 800px; height: 480px"></div>
+		    	<div id="gameContainer" style="width: 900px; height: 530px"></div>
 		    	<div class="footer">
 		        	<div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
 		        	<div class="title">Oca</div>
 		   		</div>
 	    	</div>
   		</div>
+
+	    <div id="chat_div"> </div>
+	    <hr />
+	    <div id="log"> </div>	
 
    </div>
   </body>
