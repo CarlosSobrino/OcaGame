@@ -6,13 +6,12 @@ $(document).ready(function(){
               box.chatbox("option", "boxManager").toggleBox();
           }
           else {
-              box = $("#chat_div").chatbox({id:"chat_div", 
+              box = $("#chat_div").chatbox({id:"User", 
                                             user:{key : "value"},
-                                            title : "C",
+                                            title : "Chat",
                                             messageSent : function(id, user, msg) {
-                                                $("#log").append(id + " said: " + msg + "<br/>");
                                                 $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
                                             }});
           }
       });
-  });
+});

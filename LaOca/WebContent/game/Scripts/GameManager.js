@@ -1,3 +1,9 @@
+"use strict";
+$(document).ready(function(){
+	 var gameInstance = UnityLoader.instantiate("gameContainer", "Build/App.json", {onProgress: UnityProgress});
+});
+
+
 var GameManager= {
 		MoveFicha:function(player,dado){
 			player = 1;

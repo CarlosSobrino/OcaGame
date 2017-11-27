@@ -6,6 +6,7 @@
 	 var tituloBar = '<div class="navbar-header"><a class="navbar-brand">'+titulo+'</a></div>';
 	 var inicioBar =  '<ul class="nav navbar-nav"><li class="active"><a href="../index/index.html">Inicio</a></li></ul>';
 	 var juegoBar =  '<ul class="nav navbar-nav"><li class="active"><a href="../game/game.html">Juego</a></li></ul>';
+	 var rankingBar =  '<ul class="nav navbar-nav"><li class="active"><a href="../ranking/ranking.html">Ranking</a></li></ul>';
 	 var inicioDerecha =  '<ul class="nav navbar-nav navbar-right">';
 	 var registrarBar = '<li><a href="../registrar/registrar.html"><span class="glyphicon glyphicon-user"></span> Registrarse</a></li>';
 	 var indetificarseBar = '<li><a href="../login/login.html"><span class="glyphicon glyphicon-log-in"></span> Identificarse</a></li>';
@@ -16,6 +17,7 @@
 	 					tituloBar+
 	 					inicioBar+
 	 					juegoBar+
+	 					rankingBar+
 	 					inicioDerecha+
 	 						registrarBar+
 	 						indetificarseBar+
