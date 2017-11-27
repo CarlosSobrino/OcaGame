@@ -30,23 +30,33 @@ public class StageManager : MonoBehaviour {
     {
         GameObject.Find("Player" + player).GetComponent<MovePlayer>().Move(ndado);
     }
-    public void MovePlayerArray(int []data)
+    public void MovePlayer(string data)
     {
         try
         {
-            GameObject.Find("Player" + data[0]).GetComponent<MovePlayer>().Move(data[1]);
+            string[] words = data.Split('\n');
+            GameObject.Find("Player" + words[0]).GetComponent<MovePlayer>().Move(Int32.Parse(words[1]));
         }
         catch(Exception e){
-
+            Debug.LogError(e.ToString());
         }
       
     }
 
-    public void InformacionTablero(string player1, string player2,string player3,string player4)
+    public void InformacionTablero(string data)
     {
-        GameObject.Find("NamePlayer1").GetComponent<Text>().text = player1;
-        GameObject.Find("NamePlayer2").GetComponent<Text>().text = player2;
-        GameObject.Find("NamePlayer3").GetComponent<Text>().text = player3;
-        GameObject.Find("NamePlayer4").GetComponent<Text>().text = player4;
+        try
+        {
+            string[] words = data.Split('\n');
+            GameObject.Find("NamePlayer1").GetComponent<Text>().text = words[0];
+            GameObject.Find("NamePlayer2").GetComponent<Text>().text = words[1];
+            GameObject.Find("NamePlayer3").GetComponent<Text>().text = words[2];
+            GameObject.Find("NamePlayer4").GetComponent<Text>().text = words[3];
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.ToString());
+        }
+
     }
 }
