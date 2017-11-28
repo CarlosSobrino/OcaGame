@@ -5,7 +5,7 @@ function validate(){
 		pwd : document.getElementById("pwd").value
 	}
 	var request = new XMLHttpRequest();
-	request.open("post", "login/login.jsp");
+	request.open("post", "login.jsp");
 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	request.onreadystatechange = function() {
 		if(request.readyState === 4){
