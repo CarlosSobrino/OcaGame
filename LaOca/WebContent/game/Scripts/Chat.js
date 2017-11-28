@@ -11,6 +11,7 @@ $(document).ready(function(){
                                             title : "Chat",
                                             messageSent : function(id, user, msg) {
                                                 $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
+                                                //TODO Enviar por websocket  el mensaje
                                             }});
           }
       });

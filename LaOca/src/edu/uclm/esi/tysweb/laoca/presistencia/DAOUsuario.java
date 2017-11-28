@@ -35,5 +35,6 @@ public class DAOUsuario {
 		bUser.append("pwd", new BsonString(user.getPwd()));
 		MongoDatabase db = MongoBroker.get().getDatabase("LaOca");
 		MongoCollection<BsonDocument> usuarios = db.getCollection("usuarios",BsonDocument.class);
-		return !usuarios.find(bUser).first().isNull();	}
+		return !usuarios.find(bUser).first().isNull();	
+		}
 }
