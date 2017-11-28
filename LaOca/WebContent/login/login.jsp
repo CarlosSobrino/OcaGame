@@ -2,10 +2,12 @@
 <%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
+System.out.println("Hola");
 String login=request.getParameter("login");
 JSONObject jso=new JSONObject(login);
 JSONObject respuesta=new JSONObject();
 try {
+	System.out.println("Hola");
 	String email=jso.getString("email");
 	String pwd=jso.getString("pwd");
 	//String tipoDeBroker=jso.getString("tipoDeBroker");
