@@ -1,13 +1,6 @@
 package edu.uclm.esi.tysweb.laoca.dominio;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import edu.uclm.esi.tysweb.laoca.dao.BrokerConPool;
-import edu.uclm.esi.tysweb.laoca.dao.BrokerSinPoolAbriendoYCerrando;
-import edu.uclm.esi.tysweb.laoca.presistencia.DAOUsuario;
+import edu.uclm.esi.tysweb.laoca.persistencia.DAOUsuario;
 
 public class User {
 	private String email;
@@ -34,10 +27,10 @@ public class User {
 		this.email = email;
 	}
 	
-	public void insert(String pwd) {
+	public void insert(String pwd) throws Exception {
 		DAOUsuario.insert(this.email,pwd);
 	}
-	
+	/*
 	public boolean existeConPool(String pwd) throws Exception {
 		String sql="Select count(*) from usuario where email=? and pwd=?";
 		Connection bd=BrokerConPool.get().getBD();
@@ -62,5 +55,5 @@ public class User {
 		int resultado=rs.getInt(1);
 		BrokerSinPoolAbriendoYCerrando.get().close(bd);
 		return resultado==1;
-	}
+	}*/
 }

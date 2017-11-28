@@ -2,7 +2,7 @@ package edu.uclm.esi.tysweb.laoca.dominio;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import edu.uclm.esi.tysweb.laoca.presistencia.DAOUsuario;
+import edu.uclm.esi.tysweb.laoca.persistencia.DAOUsuario;
 
 public class Manager {
 	private ConcurrentHashMap<String, User> usuarios;
@@ -57,7 +57,7 @@ public class Manager {
 		}
 	}
 	
-	public boolean loginSinPool(String email,String pwd) throws Exception{
+	public boolean login(String email,String pwd) throws Exception{
 		User user=new UserRegistered(email,pwd);
 		if(DAOUsuario.existeUser(user)){
 			this.usuarios.put(email,user);
@@ -65,7 +65,7 @@ public class Manager {
 		}
 		return false;
 	}
-	
+	/*
 	public User login(String email, String pass, String tipoDeBroker) throws Exception {
 		User usuario=new User(email);
 		if (tipoDeBroker.equals("conPool")) {
@@ -78,7 +78,7 @@ public class Manager {
 			throw new Exception("Broker desconocido");
 		this.usuarios.put(email, usuario);
 		return usuario;
-	}
+	}*/
 	
 	public void logoff(String email) {
 		this.usuarios.remove(email);

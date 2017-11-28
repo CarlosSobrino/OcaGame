@@ -9,7 +9,7 @@ try {
 	String email=jso.getString("email");
 	String pwd=jso.getString("pwd");
 	//String tipoDeBroker=jso.getString("tipoDeBroker");
-	if(Manager.get().loginSinPool(email, pwd)){
+	if(Manager.get().login(email, pwd)){
 		respuesta.put("result", "OK");
 		respuesta.put("mensaje", email + " conectado");
 	}else{
