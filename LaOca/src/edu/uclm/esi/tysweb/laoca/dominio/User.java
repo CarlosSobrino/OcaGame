@@ -1,6 +1,6 @@
 package edu.uclm.esi.tysweb.laoca.dominio;
 
-import edu.uclm.esi.tysweb.laoca.persistencia.DAOUsuario;
+import edu.uclm.esi.tysweb.laoca.persistencia.DAOUser;
 
 public class User {
 	private String email;
@@ -26,34 +26,23 @@ public class User {
 	public void SetEmail(String email) {
 		this.email = email;
 	}
+	public void SetPwd(String email) {
+		this.email = email;
+	}
 	
-	public void insert(String pwd) throws Exception {
-		DAOUsuario.insert(this.email,pwd);
+	public boolean insertIntoDB() throws Exception {
+		return DAOUser.insert(this);
 	}
-	/*
-	public boolean existeConPool(String pwd) throws Exception {
-		String sql="Select count(*) from usuario where email=? and pwd=?";
-		Connection bd=BrokerConPool.get().getBD();
-		PreparedStatement ps=bd.prepareStatement(sql);
-		ps.setString(1, this.email);
-		ps.setString(2, pwd);
-		ResultSet rs=ps.executeQuery();
-		rs.next();
-		int resultado=rs.getInt(1);
-		BrokerConPool.get().close(bd);
-		return resultado==1;
+	
+	public boolean loginDB() throws Exception {
+		return DAOUser.login(this);
 	}
-
-	public boolean existeAbriendoYCerrando(String pwd) throws SQLException {
-		String sql="Select count(*) from usuario where email=? and pwd=?";
-		Connection bd=BrokerSinPoolAbriendoYCerrando.get().getBD();
-		PreparedStatement ps=bd.prepareStatement(sql);
-		ps.setString(1, this.email);
-		ps.setString(2, pwd);
-		ResultSet rs=ps.executeQuery();
-		rs.next();
-		int resultado=rs.getInt(1);
-		BrokerSinPoolAbriendoYCerrando.get().close(bd);
-		return resultado==1;
-	}*/
+	
+	public boolean changePasswordDB(String newPassword) throws Exception {
+		if( DAOUser.changePassword(this, newPassword)){
+			this.SetPwd(newPassword);
+			return true;
+		}
+		return false;
+	}
 }

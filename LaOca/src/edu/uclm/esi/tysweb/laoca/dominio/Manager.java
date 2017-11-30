@@ -2,7 +2,7 @@ package edu.uclm.esi.tysweb.laoca.dominio;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import edu.uclm.esi.tysweb.laoca.persistencia.DAOUsuario;
+import edu.uclm.esi.tysweb.laoca.persistencia.DAOUser;
 
 public class Manager {
 	private ConcurrentHashMap<String, User> usuarios;
@@ -39,12 +39,6 @@ public class Manager {
 		return usuario;
 	}
 	
-	public void registrar(String email,String pwd) throws Exception{
-		User user = new UserRegistered();
-		user.SetEmail(email);
-		DAOUsuario.insert(email, pwd);
-	}
-	
 	public void addJugador(String nombreJugador) throws Exception{
 		if(this.partidasPendientes.isEmpty())
 			throw new Exception("No hay hijueputas partidas pendientes. Crea una, pendejo");
@@ -56,29 +50,30 @@ public class Manager {
 			this.partidasEnJuego.put(partida.getId(), partida);
 		}
 	}
-	
+	//TODO Maybe it should return the user
 	public boolean login(String email,String pwd) throws Exception{
 		User user=new UserRegistered(email,pwd);
-		if(DAOUsuario.existeUser(user)){
-			this.usuarios.put(email,user);
+		return user.loginDB();
+		//TODO insert user in the list
+	}
+	
+	//TODO Maybe it should return the user
+	public boolean registrar(String email,String pwd) throws Exception{
+		User user = new UserRegistered();
+		//TODO insert user in the list
+		return user.insertIntoDB();
+	}
+	
+	//TODO Maybe it should return the user
+	public boolean changePassword(String email,String pwd,String newPassword) throws Exception{
+		User user= this.usuarios.get(email);
+		if(user != null) {
+			user.changePasswordDB(newPassword);
 			return true;
 		}
 		return false;
 	}
-	/*
-	public User login(String email, String pass, String tipoDeBroker) throws Exception {
-		User usuario=new User(email);
-		if (tipoDeBroker.equals("conPool")) {
-			if (!usuario.existeConPool(pass))
-				throw new Exception("Usuario o contrase�a invalidos");
-		} else if (tipoDeBroker.equals("abriendoYCerrandoConexion")) {
-			if (!usuario.existeAbriendoYCerrando(pass))
-				throw new Exception("Usuario o contraseña inválidos");
-		} else 
-			throw new Exception("Broker desconocido");
-		this.usuarios.put(email, usuario);
-		return usuario;
-	}*/
+
 	
 	public void logoff(String email) {
 		this.usuarios.remove(email);
