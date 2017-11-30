@@ -33,6 +33,7 @@ public class DAOUser {
 			MongoBroker.get().close(db_client);
 			throw new Exception("Email o contraseña incorrectos");
 		}
+		MongoBroker.get().close(db_client);
 		return true;
 	}
 	
