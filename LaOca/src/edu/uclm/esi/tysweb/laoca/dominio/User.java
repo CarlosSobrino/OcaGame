@@ -1,11 +1,18 @@
 package edu.uclm.esi.tysweb.laoca.dominio;
 
 import edu.uclm.esi.tysweb.laoca.persistencia.DAOUser;
+import java.io.IOException;
+import javax.websocket.Session;
+import org.json.JSONObject;
 
 public class User {
-	private String email;
+	protected String email;
 	private String pwd;
-
+	protected Partida partida;
+	private Session session;
+	private Casilla casilla;
+	private int turnosSinTirar;
+	
 	public User(String email) {
 		this.email = email;
 	}
@@ -44,5 +51,46 @@ public class User {
 			return true;
 		}
 		return false;
+	}
+	
+	public void setWSSession(Session sesion) {
+		this.session=sesion;
+	}
+	
+	public void setPartida(Partida partida) {
+		this.partida=partida;
+		if (partida!=null)
+			partida.addJugador(this);
+	}
+
+	public void enviar(JSONObject jso) throws IOException {
+		this.session.getBasicRemote().sendText(jso.toString());
+	}
+
+	public Casilla getCasilla() {
+		return this.casilla;
+	}
+	public Partida getPartida() {
+		return partida;
+	}
+	public Session getWSSession() {
+		return session;
+	}
+
+	public void setCasilla(Casilla casilla) {
+		this.casilla = casilla;
+	}
+
+	public int getTurnosSinTirar() {
+		return this.turnosSinTirar;
+	}
+	
+	public void setTurnosSinTirar(int turnosSinTirar) {
+		this.turnosSinTirar = turnosSinTirar;
+	}
+	
+	@Override
+	public String toString() {
+		return this.email + " jugando en " + (this.partida!=null ? this.partida.getId() : "ninguna ") + ", " + this.casilla.getPos() + ", turnos: " + this.turnosSinTirar;
 	}
 }

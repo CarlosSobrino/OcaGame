@@ -2,6 +2,8 @@ package edu.uclm.esi.tysweb.laoca.dominio;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.json.JSONObject;
+
 import edu.uclm.esi.tysweb.laoca.persistencia.DAOUser;
 
 public class Manager {
@@ -77,6 +79,23 @@ public class Manager {
 	
 	public void logoff(String email) {
 		this.usuarios.remove(email);
+	}
+	
+	public JSONObject tirarDado(int idPartida, String jugador, int dado) throws Exception {
+		Partida partida=this.partidasEnJuego.get(idPartida);
+		JSONObject mensaje=partida.tirarDado(jugador, dado);
+		mensaje.put("idPartida", idPartida);
+		mensaje.put("jugador", jugador);
+		partida.broadcast(mensaje);
+		if (mensaje!=null && mensaje.opt("ganador")!=null) {
+			terminar(partida);
+		}
+		return mensaje;
+	}
+
+	private void terminar(Partida partida) {
+		partida.terminar();
+		partidasEnJuego.remove(partida.getId());
 	}
 
 }
