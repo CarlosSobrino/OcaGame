@@ -3,7 +3,8 @@ function registrar(){
 	var p = {
 			email : document.getElementById("email").value,
 			pwd1 : document.getElementById("pwd1").value,
-			pwd2 : document.getElementById("pwd1").value
+			pwd2 : document.getElementById("pwd2").value,
+			nick: document.getElementById("nick").value
 	};
 	var request = new XMLHttpRequest();
 	request.open("post", "registrar.jsp");

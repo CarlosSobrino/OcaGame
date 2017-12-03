@@ -54,16 +54,16 @@ public class Manager {
 	}
 	//TODO Maybe it should return the user
 	public boolean login(String email,String pwd) throws Exception{
-		User user=new UserRegistered(email,pwd);
-		return user.loginDB();
-		//TODO insert user in the list
+		User user=DAOUser.login(email,pwd);
+		usuarios.put(email, user);
+		return user != null;
 	}
 	
 	//TODO Maybe it should return the user
-	public boolean registrar(String email,String pwd) throws Exception{
-		User user = new UserRegistered();
-		//TODO insert user in the list
-		return user.insertIntoDB();
+	public boolean registrar(String email,String pwd,String nick) throws Exception{
+		User user=DAOUser.insert(email,pwd, nick);
+		usuarios.put(email, user);
+		return  user != null;
 	}
 	
 	//TODO Maybe it should return the user
@@ -93,6 +93,10 @@ public class Manager {
 		return mensaje;
 	}
 
+	public JSONObject getScores() throws Exception {
+		return DAOUser.getScoreList();
+	}
+	
 	private void terminar(Partida partida) {
 		partida.terminar();
 		partidasEnJuego.remove(partida.getId());

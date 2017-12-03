@@ -9,9 +9,10 @@
 		String email = jso.getString("email");
 		String pwd1 = jso.getString("pwd1");
 		String pwd2 = jso.getString("pwd2");
+		String nick = jso.getString("nick");
 		System.out.println(email);
 		comprobarCredenciales(email,pwd1,pwd2);
-		Manager.get().registrar(email, pwd1);
+		Manager.get().registrar(email, pwd1,nick);
 		respuesta.put("result","OK");
 		respuesta.put("mensaje","Usuario registrado correctamente");
 		System.out.println(respuesta.toString());

@@ -6,15 +6,30 @@
     <title>Ranking</title>
      <link href="../css/bootstrap.css" rel="stylesheet">
 	<link href="../css/boostrap.min.css" rel="stylesheet">
+	<link href="points_table.css" rel="points_table">
     <script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/menu.js"></script>
+	<script src="ranking.js"></script>
   </head>
   <body>
    	<div  id="menu"></div>
-	<div style="text-align: center;">
-Aqui iría el ranking
+	
+	<div class="container">
+	  <h2>Ranking</h2>          
+	  <table class="table table-condensed">
+	    <thead>
+	      <tr>
+	        <th>Posición</th>
+	        <th>Nick</th>
+	        <th>Puntuación</th>
+	      </tr>
+	    </thead>
+	    <tbody id="ranking_list">
+	    </tbody>
+	  </table>
 	</div>
+	
   </body>
 </html>

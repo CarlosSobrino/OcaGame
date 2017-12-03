@@ -8,6 +8,21 @@ import org.json.JSONObject;
 public class User {
 	protected String email;
 	private String pwd;
+	private String score;
+	private String nick;
+	public String getScore() {
+		return score;
+	}
+	public void setScore(String score) {
+		this.score = score;
+	}
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
 	protected Partida partida;
 	private Session session;
 	private Casilla casilla;
@@ -37,14 +52,14 @@ public class User {
 		this.email = email;
 	}
 	
-	public boolean insertIntoDB() throws Exception {
-		return DAOUser.insert(this);
+	public boolean updateScoreDB(String newScore) throws Exception {
+		int new_score = Integer.parseInt(newScore);
+		int old_score = Integer.parseInt(this.getScore());
+		if(new_score < old_score) return false;
+		DAOUser.changeScore(this.email,score);
+		this.score=newScore;
+		return true;
 	}
-	
-	public boolean loginDB() throws Exception {
-		return DAOUser.login(this);
-	}
-	
 	public boolean changePasswordDB(String newPassword) throws Exception {
 		if( DAOUser.changePassword(this, newPassword)){
 			this.SetPwd(newPassword);
