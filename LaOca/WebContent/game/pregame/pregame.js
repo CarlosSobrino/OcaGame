@@ -4,7 +4,9 @@ $(document).ready(function(){
 });
 var Pregame={
 		jugarSinRegistrar:function(){
-			var nick = document.getElementById("nick").value;
+			var user = {
+					nick : document.getElementById("nick").value,
+				}
 			if(nick === ""){
 				alert("No se ha escrito ningun nick");
 			}else{
@@ -22,7 +24,7 @@ var Pregame={
 						//conectarWebSocket();
 					}
 				};
-				request.send("nick="+JSON.stringify(nick));
+				request.send("user="+JSON.stringify(user));
 			}
 		}
 }
