@@ -54,21 +54,32 @@ public class Manager {
 	}
 	//TODO Maybe it should return the user
 	public boolean login(String email,String pwd) throws Exception{
-		User user=DAOUser.login(email,pwd);
-		usuarios.put(email, user);
+		User user = DAOUser.login(email,pwd);
+		String nick = user.getNick();
+		if(nick != null) {
+			usuarios.put(nick, user);
+		}
 		return user != null;
 	}
 	
 	//TODO Maybe it should return the user
 	public boolean registrar(String email,String pwd,String nick) throws Exception{
-		User user=DAOUser.insert(email,pwd, nick);
-		usuarios.put(email, user);
+		User user = DAOUser.insert(email, pwd, nick);
+		usuarios.put(nick, user);
 		return  user != null;
 	}
 	
+	public boolean jugarSinRegistrar(String nick) throws Exception{
+		User user = null;
+		if (!usuarios.containsKey(nick)) {
+			user = new UserUnregistered(nick);
+			usuarios.put(nick, user);
+		}
+		return user != null;
+	}
 	//TODO Maybe it should return the user
 	public boolean changePassword(String email,String pwd,String newPassword) throws Exception{
-		User user= this.usuarios.get(email);
+		User user = DAOUser.login(email, pwd);
 		if(user != null) {
 			user.changePasswordDB(newPassword);
 			return true;
@@ -101,5 +112,4 @@ public class Manager {
 		partida.terminar();
 		partidasEnJuego.remove(partida.getId());
 	}
-
 }

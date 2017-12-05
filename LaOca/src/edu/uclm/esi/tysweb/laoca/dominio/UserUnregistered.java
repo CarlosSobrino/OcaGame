@@ -6,7 +6,7 @@ public class UserUnregistered extends User {
 
 	}
 
-	public UserUnregistered() {
+	public UserUnregistered(String nick) {
 		
 	}
 }
