@@ -13,6 +13,10 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<!-- Menu -->
 	<script src="../js/menu.js"></script>
+	<!-- Pregame -->
+	<script src="pregame/pregame.js"></script>
+	
+	
 	<!-- Chat -->
     <link rel="stylesheet" href="../css/jquery-ui-1.8.2.custom.css" type="text/css"/>
     <script type="text/javascript" src="../js/jquery-1.4.2.min.js"></script>
@@ -28,10 +32,17 @@
     <script>
       var gameInstance = UnityLoader.instantiate("gameContainer", "Build/App.json", {onProgress: UnityProgress});
     </script>
+  
   </head>
+  <link href="pregame/pregame.css" rel="stylesheet">
   <body>
   <!-- MENU BAR-->
-   <div  id="menu"></div>
+  
+  
+  
+  <div  id="menu"></div>
+  <!-- DIV PREGAME-->
+  <div  id="div_pregame"></div>
   <!-- CHAT -->
   <div id="chat_div"> </div>
   
@@ -44,10 +55,6 @@
   		<div style="text-align: center;">
 		    <div class="webgl-content">
 		    <!--  <div id="gameContainer" style="width: 900px; height: 530px"></div> -->	
-		    	<div class="footer">
-		        	<div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
-		        	<div class="title">Oca</div>
-		   		</div>
 	    	</div>
   		</div>
 
