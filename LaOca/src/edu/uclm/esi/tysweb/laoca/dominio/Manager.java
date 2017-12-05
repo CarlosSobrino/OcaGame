@@ -53,7 +53,7 @@ public class Manager {
 		}
 	}
 	//TODO Maybe it should return the user
-	public boolean login(String email,String pwd) throws Exception{
+	public User login(String email,String pwd) throws Exception{
 		User user = DAOUser.login(email,pwd);
 		if(user != null) {
 			String nick = user.getNick();
@@ -61,14 +61,14 @@ public class Manager {
 				usuarios.put(nick, user);
 			}
 		}
-		return user != null;
+		return user;
 	}
 
 	//TODO Maybe it should return the user
-	public boolean registrar(String email,String pwd,String nick) throws Exception{
+	public User registrar(String email,String pwd,String nick) throws Exception{
 		User user = DAOUser.insert(email, pwd, nick);
 		usuarios.put(nick, user);
-		return  user != null;
+		return  user;
 	}
 
 	public boolean jugarSinRegistrar(String nick) throws Exception{

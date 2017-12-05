@@ -8,8 +8,9 @@ JSONObject respuesta=new JSONObject();
 try {
 	String email=jso.getString("email");
 	String pwd=jso.getString("pwd");
-	//String tipoDeBroker=jso.getString("tipoDeBroker");
-	if(Manager.get().login(email, pwd)){
+	User user=Manager.get().login(email, pwd);
+	if(user != null){
+		session.setAttribute("user", user);
 		respuesta.put("result", "OK");
 		respuesta.put("mensaje", email + " conectado");
 	}else{
