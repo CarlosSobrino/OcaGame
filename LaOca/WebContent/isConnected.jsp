@@ -7,7 +7,10 @@
 	User usuario=(User) session.getAttribute("user");
 	if (usuario==null)
 		jso.put("result", "ERROR");
-	else
+	else{
 		jso.put("result", "OK");
+		jso.put("nick", usuario.getNick());
+	}
+
 	out.print(jso.toString());
 %>

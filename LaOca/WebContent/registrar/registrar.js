@@ -13,11 +13,11 @@ function registrar(){
 		if(request.readyState === 4){
 			var respuesta = JSON.parse(request.responseText);
 			if(respuesta.result ==="OK"){
-				alert(respuesta.mensaje);
+				 location.href ="index.html";
 			}else{
+				//TODO Reflejar el mensaje en rojo debajo del email
 				alert(respuesta.mensaje);
 			}
-			//conectarWebSocket();
 		}
 	};
 	request.send("p=" + JSON.stringify(p));

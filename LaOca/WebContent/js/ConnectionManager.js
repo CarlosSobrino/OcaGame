@@ -1,33 +1,47 @@
 "use strict";
-$(document).ready(function(){
-	ConnectionManager.isConnected();
-});
-
+var ws= null;
+var connected= false;
+var nick="";
+var flag =false;
 var ConnectionManager={
-	ws:null,
 	isConnected: function() {
 		var request = new XMLHttpRequest();	
-		request.open("get", "../ConnectionManager.jsp");
+		request.open("get", "../isConnected.jsp");
 		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		request.onreadystatechange=function() {
 			if (request.readyState===4) {
 				var respuesta=JSON.parse(request.responseText);
 				if (respuesta.result==="OK") {
-					//TODO hacer que una variable del html adquiera el valor al logearse
-					alert("Si estas logeado");
+					connected = true;
+					nick=respuesta.nick;
+				}
+				flag=true;
+			}
+		};
+		request.send();	
+	},
+	logout: function(){
+		var request = new XMLHttpRequest();	
+		request.open("get", "../logout.jsp");
+		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		request.onreadystatechange=function() {
+			if (request.readyState===4) {
+				var respuesta=JSON.parse(request.responseText);
+				if (respuesta.result==="OK") {
+					 location.href ="index.html";
 				}
 			}
 		};
 		request.send();	
 	},
 	connectWebSocket: function(){
-		this.ws=new WebSocket("ws://localhost:8080/LaOca/servidorDePartidas");
+		ws=new WebSocket("ws://localhost:8080/LaOca/servidorDePartidas");
 		
-		this.ws.onopen = function() {
+		ws.onopen = function() {
 			addMensaje("Websocket conectado");
 			alert("WebSocket connected");
 		}	
-		this.ws.onmessage = function(datos) {
+		ws.onmessage = function(datos) {
 			var mensaje=datos.data;
 			mensaje=JSON.parse(mensaje);
 			if (mensaje.tipo=="DIFUSION") {
