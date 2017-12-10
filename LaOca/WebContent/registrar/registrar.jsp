@@ -14,6 +14,7 @@
 		comprobarCredenciales(email,pwd1,pwd2);
 		User user = Manager.get().registrar(email, pwd1,nick);
 		if(user != null){
+			session.setAttribute("user", user);
 			respuesta.put("result","OK");
 			respuesta.put("mensaje","Usuario registrado correctamente");
 		}else{

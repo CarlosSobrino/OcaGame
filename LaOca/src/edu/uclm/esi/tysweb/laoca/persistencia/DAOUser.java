@@ -31,6 +31,29 @@ public class DAOUser {
 		}
 	}
 	
+	private static boolean checkExistNick(String nick,MongoClient db_client) throws Exception {
+		BsonDocument criteria = new BsonDocument();
+		criteria.append("nick", new BsonString(nick));
+		MongoCollection<BsonDocument> users = db_client.getDatabase("LaOca").getCollection("users",BsonDocument.class);
+		long user = users.count(criteria);
+		if(user == 0) {
+			return false;
+		}else if(user == 1) {
+			return true;
+		}else {
+			MongoBroker.get().close(db_client);
+			throw new Exception("Fatal Error");
+		}
+	}
+	
+	public static boolean checkNick(String nick) throws Exception{
+		MongoClient db_client =  MongoBroker.get().getBD();
+		boolean aux = checkExistNick(nick, db_client);
+		MongoBroker.get().close(db_client);
+		return aux;
+	}
+	
+	
 	public static User login(String email,String pwd) throws Exception{
 		MongoClient db_client =  MongoBroker.get().getBD();
 
@@ -53,6 +76,10 @@ public class DAOUser {
 			throw new Exception("Usuario ya registrado");
 		}
 		UserRegistered user = new UserRegistered(email,pwd);
+		if(checkExistNick(nick, db_client)) {
+			MongoBroker.get().close(db_client);
+			throw new Exception("Este nick ya existe, elige otro");
+		}
 		user.setNick(nick);
 		user.setScore("0");
 		

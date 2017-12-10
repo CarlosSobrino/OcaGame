@@ -11,7 +11,7 @@ function validate(){
 		if(request.readyState === 4){
 			var respuesta = JSON.parse(request.responseText);
 			if(respuesta.result ==="OK"){
-				 location.href ="index.html";
+				 location.href ="../index.html";
 			}else{
 				//TODO Reflejar el mensaje en rojo debajo del email
 				alert(respuesta.mensaje);

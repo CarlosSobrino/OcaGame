@@ -52,7 +52,7 @@ public class Manager {
 			this.partidasEnJuego.put(partida.getId(), partida);
 		}
 	}
-	//TODO Maybe it should return the user
+
 	public User login(String email,String pwd) throws Exception{
 		User user = DAOUser.login(email,pwd);
 		if(user != null) {
@@ -64,7 +64,6 @@ public class Manager {
 		return user;
 	}
 
-	//TODO Maybe it should return the user
 	public User registrar(String email,String pwd,String nick) throws Exception{
 		User user = DAOUser.insert(email, pwd, nick);
 		usuarios.put(nick, user);
@@ -79,21 +78,22 @@ public class Manager {
 		}
 		return user != null;
 	}
-	//TODO Maybe it should return the user
+
 	public boolean changePassword(String email,String pwd,String newPassword) throws Exception{
 		User user = DAOUser.login(email, pwd);
 		String nick = user.getNick();
+		boolean aux=false;
 		if(user != null) {
 			user.changePasswordDB(newPassword);
 			usuarios.put(nick, user);
-			return true;
+			aux=true;
 		}
-		return false;
+		return aux;
 	}
 
 
-	public void logoff(String email) {
-		this.usuarios.remove(email);
+	public User logout(String nick) {
+		return this.usuarios.remove(nick);
 	}
 
 	public JSONObject tirarDado(int idPartida, String jugador, int dado) throws Exception {

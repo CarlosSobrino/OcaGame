@@ -7,7 +7,6 @@ $(document).ready(function(){
 		if (request.readyState==4) {
 			var respuesta=JSON.parse(request.responseText);
 			if (respuesta.result==="OK") {
-				alert(respuesta.ranking.scores[0].position);
 				for(var i in respuesta.ranking.scores){
 					var inicio= '<tr>';
 					var pos = '<td>'+ respuesta.ranking.scores[i].position +'</td>';

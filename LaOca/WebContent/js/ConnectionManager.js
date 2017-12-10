@@ -28,7 +28,7 @@ var ConnectionManager={
 			if (request.readyState===4) {
 				var respuesta=JSON.parse(request.responseText);
 				if (respuesta.result==="OK") {
-					 location.href ="index.html";
+					 location.href ="../index.html";
 				}
 			}
 		};
