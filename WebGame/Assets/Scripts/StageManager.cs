@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StageManager : MonoBehaviour {
+
 
     void Awake()
     {
@@ -14,21 +16,17 @@ public class StageManager : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
-		
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
-    public void PermitirDado()
+    public void PermitirDado(string data)
     {
         GameObject.Find("Dado").GetComponent<RollingDice>().ChangeState(1);
-    }
-    public void MovePlayer(int player, int ndado)
-    {
-        GameObject.Find("Player" + player).GetComponent<MovePlayer>().Move(ndado);
     }
     public void MovePlayer(string data)
     {

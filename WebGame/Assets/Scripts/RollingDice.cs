@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RollingDice : MonoBehaviour {
+    [DllImport("__Internal")]
+    private static extern void LanzarDado();
 
     private int State;
     //State 0 : Cuando el dado esta en la mesa y el boton desactivado    
@@ -17,7 +20,7 @@ public class RollingDice : MonoBehaviour {
     {
         if(State == 2)
         {
-            transform.Rotate(2, 1, 0.5f);
+            transform.Rotate(7, 4, 0.5f);
            
         }
     }
@@ -26,10 +29,10 @@ public class RollingDice : MonoBehaviour {
     {
         if(State == 1)
         {
-            //Send Request with JavaScript
             gameObject.transform.position += (new Vector3(0, 2, 0));
             ChangeState(2);
             gameObject.GetComponent<Collider>().attachedRigidbody.useGravity = false;
+            LanzarDado(); //Send Request with JavaScript
         }
 
     }
@@ -68,6 +71,8 @@ public class RollingDice : MonoBehaviour {
         }
         else if(state == 1)
         {
+
+            Debug.Log("Funciona?");
             GameObject.Find("TirarDado").GetComponent<Button>().interactable = true;
         }
         else if (state == 2)
