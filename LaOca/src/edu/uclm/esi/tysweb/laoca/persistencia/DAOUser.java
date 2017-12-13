@@ -3,6 +3,7 @@ package edu.uclm.esi.tysweb.laoca.persistencia;
 import org.bson.BsonDocument;
 import org.bson.BsonInt32;
 import org.bson.BsonString;
+import org.bson.conversions.Bson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,6 +11,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Sorts;
 
 import edu.uclm.esi.tysweb.laoca.dominio.User;
 import edu.uclm.esi.tysweb.laoca.dominio.UserRegistered;
@@ -81,13 +83,13 @@ public class DAOUser {
 			throw new Exception("Este nick ya existe, elige otro");
 		}
 		user.setNick(nick);
-		user.setScore("0");
+		user.setScore(0);
 		
 		BsonDocument criteria = new BsonDocument();
 		criteria.append("email", new BsonString(email));
 		criteria.append("pwd", new BsonString(pwd));
 		criteria.append("nick", new BsonString(nick));
-		criteria.append("score", new BsonString("0"));
+		criteria.append("score", new BsonInt32(0));
 		
 		MongoDatabase db = db_client.getDatabase("LaOca");
 		MongoCollection<BsonDocument> users = db.getCollection("users",BsonDocument.class);
@@ -117,7 +119,7 @@ public class DAOUser {
 		return true;
 	}
 	//TODO test this method
-	public static boolean changeScore(String email,String score) throws Exception{
+	public static boolean changeScore(String email,int score) throws Exception{
 		MongoClient db_client =  MongoBroker.get().getBD();
 		//Check if the user exists before insert
 		if(!checkExistUser(email,null,db_client)) {
@@ -129,7 +131,7 @@ public class DAOUser {
 		criteria.append("email", new BsonString(email));
 		
 		BsonDocument updateCirteria = new BsonDocument();
-		updateCirteria.append("score", new BsonString(score));
+		updateCirteria.append("score", new BsonInt32(score));
 		
 		
 		MongoDatabase db = db_client.getDatabase("LaOca");
@@ -139,12 +141,12 @@ public class DAOUser {
 		return true;
 	}
 	
-	private static String getScore(String email,MongoClient db_client) throws Exception {
+	private static int getScore(String email,MongoClient db_client) throws Exception {
 		BsonDocument criteria = new BsonDocument();
 		criteria.append("email", new BsonString(email));
 		MongoCollection<BsonDocument> users = db_client.getDatabase("LaOca").getCollection("users",BsonDocument.class);
 		BsonDocument find= users.find(criteria).first();
-		return find.getString("score").getValue();
+		return find.getInt32("score").getValue();
 	}
 	
 	private static String getNick(String email,MongoClient db_client) throws Exception {
@@ -159,20 +161,29 @@ public class DAOUser {
 		JSONArray score_array = new JSONArray();
 		JSONObject score_obj = new JSONObject();
 		MongoClient db_client =  MongoBroker.get().getBD();
-		MongoCollection<BsonDocument> users = db_client.getDatabase("LaOca").getCollection("users",BsonDocument.class);
-		FindIterable<BsonDocument> find= users.find();
-		int pos=0;
-		for(BsonDocument index : find) {
-			pos++;
-			score_obj.put("nick", index.getString("nick").getValue());
-			score_obj.put("score", index.getString("score").getValue());
-			score_obj.put("position", pos+"");
-			score_array.put(score_obj);
-		}
-		JSONObject result = new JSONObject();
+		try {
+			Bson sort = Sorts.descending("users", "score");
+			MongoCollection<BsonDocument> users = db_client.getDatabase("LaOca").getCollection("users",BsonDocument.class);
+			FindIterable<BsonDocument> find= users.find().sort(sort).limit(50);
+			int pos=0;
+			for(BsonDocument index : find) {
+				pos++;
+				System.out.println(index.getString("nick").getValue());
+				score_obj.put("nick", index.getString("nick").getValue());
+				score_obj.put("score", index.getInt32("score").getValue());
+				score_obj.put("position", pos+"");
+				score_array.put(score_obj);
+				score_obj = new JSONObject();
+			}
+			JSONObject result = new JSONObject();
 
-		result.put("scores", score_array);
-		MongoBroker.get().close(db_client);
-		return result;
+			result.put("scores", score_array);
+			MongoBroker.get().close(db_client);
+			return result;
+		}catch(Exception e) {
+			MongoBroker.get().close(db_client);
+			throw e;
+		}
+
 	}
 }

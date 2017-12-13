@@ -11,6 +11,7 @@ var MenuManager={
 	  registrarBar : '<li><a href="../registrar/registrar.html"><span class="glyphicon glyphicon-user"></span> Registrarse</a></li>',
 	  indetificarseBar : '<li><a href="../login/login.html"><span class="glyphicon glyphicon-log-in"></span> Identificarse</a></li>',
 	  desconectarseBar : '<li><a href="#" onclick="ConnectionManager.logout();return false;" ><span class="glyphicon glyphicon-log-in"></span> Desconectarse</a></li>',
+	  desconectarseGoogle:   '<li><a href="#" onclick="ConnectionManager.logoutGoogle();return false;" ><span class="glyphicon glyphicon-log-in"></span> Desconectarse</a></li>',
 	  finalDerecha : '</ul>',
 	  final : '</div></nav>', 
 	  
@@ -40,5 +41,19 @@ var MenuManager={
 			 						this.finalDerecha+
 			 					this.final;
 			 $("#menu").append(finalMenu);
-		  }
+		  },
+		  LoadMenuWithConnectionGoogle: function(){
+				 var finalMenu = this.inicio+
+				 					this.tituloBar+
+				 					this.inicioBar+
+				 					this.juegoBar+
+				 					this.rankingBar+
+				 						this.inicioDerecha+
+				 						'<li><a>Conectado:</a></li>'+
+				 						'<li><button class="btn btn-danger navbar-btn">'+nick+'</button></li>'+
+				 							this.desconectarseGoogle+
+				 						this.finalDerecha+
+				 					this.final;
+				 $("#menu").append(finalMenu);
+			  }
  };

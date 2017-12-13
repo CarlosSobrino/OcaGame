@@ -2,6 +2,7 @@
 <html lang="es-ES">
 	<head>
 		<meta charset="UTF-8">
+		<meta name="google-signin-client_id" content="1029920939763-791nqnv3lssob95ebs0r3m2gckacn8a5.apps.googleusercontent.com">
 		<title>Identificarse</title>
 		<!-- Bootstrap Core CSS -->
 		<link href="../css/bootstrap.css" rel="stylesheet">
@@ -17,6 +18,9 @@
 		<script src="../js/MenuManager.js"></script>
 		<script src="login.js"></script>
 		<script src="recordar.js"></script>
+		<!-- Google -->
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<script src="loginGoogle.js"></script>
 	</head>
 	<body>
    	<div id="menu"></div>
@@ -36,6 +40,7 @@
 				<button type="button" class="btn btn-primary" onclick="validate()">
 					Enviar
 				</button>
+				
 			</form>
  			<div class="form-group" style ='margin: 10px 0 0 0'>
 				<div class="form-check form-check-inline" >
@@ -45,6 +50,7 @@
 				</div>
 				<div id=info_recordar style ='margin: 0 0 0 40px'></div>
 			</div>
+			<div class="g-signin2" data-onsuccess="onSignIn" style ='margin: 10px 0 0 0'></div>
 		</div>
 	</body>
 

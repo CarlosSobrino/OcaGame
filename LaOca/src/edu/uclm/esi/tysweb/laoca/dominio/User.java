@@ -8,12 +8,12 @@ import org.json.JSONObject;
 public class User {
 	protected String email;
 	private String pwd;
-	private String score;
+	private int score;
 	private String nick;
-	public String getScore() {
+	public int getScore() {
 		return score;
 	}
-	public void setScore(String score) {
+	public void setScore(int score) {
 		this.score = score;
 	}
 	public String getNick() {
@@ -52,10 +52,9 @@ public class User {
 		this.email = email;
 	}
 	
-	public boolean updateScoreDB(String newScore) throws Exception {
-		int new_score = Integer.parseInt(newScore);
-		int old_score = Integer.parseInt(this.getScore());
-		if(new_score < old_score) return false;
+	public boolean updateScoreDB(int newScore) throws Exception {
+		int old_score = this.getScore();
+		if(newScore < old_score) return false;
 		DAOUser.changeScore(this.email,score);
 		this.score=newScore;
 		return true;

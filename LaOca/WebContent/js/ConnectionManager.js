@@ -3,6 +3,7 @@ var ws= null;
 var connected= false;
 var nick="";
 var flag =false;
+var google_user=true;
 var ConnectionManager={
 	isConnected: function() {
 		var request = new XMLHttpRequest();	
@@ -51,5 +52,15 @@ var ConnectionManager={
 				comenzar(mensaje);
 			}
 		}	 
-	}
+	},
+	logoutGoogle: function() {
+		alert("desconectado google");
+		ConnectionManager.logout();
+		/*
+	      var auth2 = gapi.auth2.getAuthInstance();
+	      auth2.signOut().then(function () {
+	        console.log('User signed out.');
+	        ConnectionManager.logout();
+	      });*/
+    }
 }
