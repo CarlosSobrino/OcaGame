@@ -36,6 +36,12 @@ public class RollingDice : MonoBehaviour {
         }
 
     }
+    public void GirarDado()
+    {
+        gameObject.transform.position += (new Vector3(0, 2, 0));
+        ChangeState(2);
+        gameObject.GetComponent<Collider>().attachedRigidbody.useGravity = false;
+    }
 
     public void RollDice(int i)
     {
@@ -71,8 +77,6 @@ public class RollingDice : MonoBehaviour {
         }
         else if(state == 1)
         {
-
-            Debug.Log("Funciona?");
             GameObject.Find("TirarDado").GetComponent<Button>().interactable = true;
         }
         else if (state == 2)

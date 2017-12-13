@@ -23,8 +23,12 @@ public class StageManager : MonoBehaviour {
 	void Update () {
 		
 	}
+    public void GirarDado()
+    {
+        GameObject.Find("Dado").GetComponent<RollingDice>().GirarDado();
+    }
 
-    public void PermitirDado(string data)
+    public void PermitirDado()
     {
         GameObject.Find("Dado").GetComponent<RollingDice>().ChangeState(1);
     }
@@ -39,6 +43,10 @@ public class StageManager : MonoBehaviour {
             Debug.LogError(e.ToString());
         }
       
+    }
+    public void LanzarDadoPlayer(int i)
+    {
+        GameObject.Find("Dado").GetComponent<RollingDice>().RollDice(i);
     }
 
     public void InformacionTablero(string data)
