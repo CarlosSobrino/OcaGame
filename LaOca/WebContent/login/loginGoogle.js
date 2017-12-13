@@ -5,11 +5,10 @@ function onSignIn(googleUser) {
   console.log('Image URL: ' + profile.getImageUrl());
   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   var login = {
-			email : document.getElementById("email").value,
-			pwd : document.getElementById("pwd").value
+			googleId : profile.getId(),
 		}
 		var request = new XMLHttpRequest();
-		request.open("post", "login.jsp");
+		request.open("post", "loginGoogle.jsp");
 		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		request.onreadystatechange = function() {
 			if(request.readyState === 4){
@@ -18,7 +17,7 @@ function onSignIn(googleUser) {
 					 location.href ="../index.html";
 				}else{
 					//TODO Reflejar el mensaje en rojo debajo del email
-					alert(respuesta.mensaje);
+					//alert(respuesta.mensaje);
 				}
 			}
 		};

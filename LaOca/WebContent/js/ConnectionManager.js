@@ -3,7 +3,7 @@ var ws= null;
 var connected= false;
 var nick="";
 var flag =false;
-var google_user=true;
+var google_user=false;
 var ConnectionManager={
 	isConnected: function() {
 		var request = new XMLHttpRequest();	

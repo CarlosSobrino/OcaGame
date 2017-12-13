@@ -10,7 +10,8 @@ public class GoogleID {
 	public GoogleID() {
 		
 	}
-	public boolean autentify() {
+	public boolean autentify(String id_player) {
+		//CLIENTID IDENTIFICADOR OCA
 		/*
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
 			    .setAudience(Collections.singletonList(CLIENT_ID))

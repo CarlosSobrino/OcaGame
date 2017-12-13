@@ -7,9 +7,9 @@ String login=request.getParameter("login");
 JSONObject jso=new JSONObject(login);
 JSONObject respuesta=new JSONObject();
 try {
-	String email=jso.getString("email");
-	String pwd=jso.getString("pwd");
-	User user=Manager.get().login(email, pwd);
+	String googleId=jso.getString("googleId");
+	
+	/*
 	if(user != null){
 		session.setAttribute("user", user);
 		respuesta.put("result", "OK");
@@ -17,7 +17,7 @@ try {
 	}else{
 		respuesta.put("result", "ERROR");
 		respuesta.put("mensaje", "Email o contraseña incorrectos");
-	}
+	}*/
 	//User usuario=Manager.get().login(email, pwd, tipoDeBroker);
 	//session.setAttribute("usuario", usuario);
 
