@@ -7,8 +7,10 @@ JSONObject jso = new JSONObject(user);
 JSONObject respuesta = new JSONObject();
 try {
 	String nick=jso.getString("nick");
-	//String tipoDeBroker=jso.getString("tipoDeBroker");
-	if(!nick.contains("\n") || !nick.contains("\t") || !nick.contains(" ")){
+	//TODO
+	//Credentials.validateNick(nick)
+	//Comprobar si existe en la base de datos -> Manager.get().ExistNick() false no existe true existe. Llamar a DAOUSER.
+	if(nick != ""){
 		respuesta.put("result", "OK");
 		respuesta.put("mensaje", nick + " conectado");
 	}else{

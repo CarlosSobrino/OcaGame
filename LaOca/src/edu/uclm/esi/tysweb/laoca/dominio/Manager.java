@@ -24,7 +24,7 @@ public class Manager {
 	public static Manager get() {
 		return ManagerHolder.singleton;
 	}
-
+	
 	public int crearPartida(String nombreJugador, int numeroDeJugadores) {
 		User usuario = findUser(nombreJugador);
 		Partida partida = new Partida(usuario, numeroDeJugadores);
