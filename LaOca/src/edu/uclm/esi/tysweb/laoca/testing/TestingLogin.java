@@ -1,4 +1,4 @@
-package edu.uclm.esi.tysweb.laoca.test;
+package edu.uclm.esi.tysweb.laoca.testing;
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
@@ -24,7 +24,7 @@ public class TestingLogin {
 
   @Test
   public void testIngLogin() throws Exception {
-    driver.get(baseUrl + "localhost:8080/LaOca/index/index.html");
+    driver.get(baseUrl + "LaOca/index/index.html");
     driver.findElement(By.linkText("Inicio")).click();
     driver.findElement(By.linkText("Registrarse")).click();
     driver.findElement(By.id("email")).clear();
