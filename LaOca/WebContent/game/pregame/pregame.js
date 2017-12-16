@@ -7,7 +7,7 @@ $(document).ready(function(){
 	    	if(connected === false){
 	    		$("#div_pregame").load("pregame/pregame.html");
 	    	}else{
-	    		ShowSalasDiv();
+	    		SalasManager.ShowSalasDiv();
 	    	}
 	    }   
 	}, 1000);
@@ -30,7 +30,7 @@ function sendNick(nick){
 			if(respuesta.result ==="OK"){
 				 //conetar web socket
 				remove("div_pregame");
-				ShowSalasDiv();
+				SalasManager.ShowSalasDiv();
 			}else{
 				//TODO Reflejar el mensaje en rojo debajo del email
 				alert(respuesta.mensaje);
