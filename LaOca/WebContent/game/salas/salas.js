@@ -1,4 +1,4 @@
 "use strict";
 function ShowSalasDiv(){
-	    $("#div_pregame").load("pregame/pregame.html");
+	    $("#div_salas").load("salas/salas.html");
 }

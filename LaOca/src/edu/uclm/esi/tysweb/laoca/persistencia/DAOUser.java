@@ -168,7 +168,6 @@ public class DAOUser {
 			int pos=0;
 			for(BsonDocument index : find) {
 				pos++;
-				System.out.println(index.getString("nick").getValue());
 				score_obj.put("nick", index.getString("nick").getValue());
 				score_obj.put("score", index.getInt32("score").getValue());
 				score_obj.put("position", pos+"");

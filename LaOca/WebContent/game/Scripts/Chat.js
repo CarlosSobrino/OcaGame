@@ -6,7 +6,7 @@ $(document).ready(function(){
               box.chatbox("option", "boxManager").toggleBox();
           }
           else {
-              box = $("#chat_div").chatbox({id:"User", 
+              box = $("#div_chat").chatbox({id:"User", 
                                             user:{key : "value"},
                                             title : "Chat",
                                             messageSent : function(id, user, msg) {
