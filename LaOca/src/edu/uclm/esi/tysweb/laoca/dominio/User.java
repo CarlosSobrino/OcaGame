@@ -10,6 +10,13 @@ public class User {
 	private String pwd;
 	private int score;
 	private String nick;
+	protected Partida partida;
+	private Session session;
+	private Casilla casilla;
+	private int turnosSinTirar;
+	
+	
+	
 	public int getScore() {
 		return score;
 	}
@@ -23,10 +30,6 @@ public class User {
 		this.nick = nick;
 	}
 
-	protected Partida partida;
-	private Session session;
-	private Casilla casilla;
-	private int turnosSinTirar;
 	
 	public User(String email) {
 		this.email = email;

@@ -9,6 +9,13 @@ var SalasManager={
 			},
 			CreateSala:function (){
 				var sala_name = $("#createSala_input").val();
+				//TODO Comprobar si la sala ya existe en el server si no:
+				/*
+				if(comprobar==true){
+					enviar sala
+				}else{
+					$("#div_createSalaOpen").load("salas/salasError.html");
+				}*/
 				if(sala_name !== ""){
 					SalasManager.SendNewSala(sala_name)
 					$("#div_createSalaOpen").empty();

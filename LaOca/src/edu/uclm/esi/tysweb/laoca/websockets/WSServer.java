@@ -18,30 +18,29 @@ import edu.uclm.esi.tysweb.laoca.dominio.Manager;
 import edu.uclm.esi.tysweb.laoca.dominio.Partida;
 import edu.uclm.esi.tysweb.laoca.dominio.User;
 
-@ServerEndpoint(value="/servidorDePartidas", configurator=HttpSessionConfigurator.class)
-public class WSPartidas {
+@ServerEndpoint(value="/WSServer", configurator=HttpSessionConfigurator.class)
+public class WSServer {
 	private static ConcurrentHashMap<String, Session> sesionesPorId=new ConcurrentHashMap<>();
 	private static ConcurrentHashMap<String, Session> sesionesPorNombre=new ConcurrentHashMap<>();
 	
 	@OnOpen
 	public void open(Session sesion, EndpointConfig config) {
 		HttpSession httpSession=(HttpSession) config.getUserProperties().get(HttpSession.class.getName());
-		User User=(User) httpSession.getAttribute("User");
+		User User=(User) httpSession.getAttribute("user");
 		User.setWSSession(sesion);
-		
-		System.out.println("Sesión " + sesion.getId());
+		System.out.println("Sesion " + sesion.getId());
 		sesionesPorId.put(sesion.getId(), sesion);
-		sesionesPorNombre.put(User.getEmail(), sesion);
-
+		sesionesPorNombre.put(User.getNick(), sesion);
+		/*
 		broadcast("Ha llegado " + User.getEmail());
-		
 		Partida partida=User.getPartida();
 		if (partida.isReady())
 			partida.comenzar();
+		*/
 	}
 	
 	@OnClose
-	public void UserSeVa(Session session) {
+	public void exit(Session session) {
 		sesionesPorId.remove(session.getId());
 		Enumeration<String> eNombres = sesionesPorNombre.keys();
 		String nombre;
@@ -57,18 +56,10 @@ public class WSPartidas {
 	}
 	
 	@OnMessage
-	public void recibir(Session session, String msg) {
+	public void recive(Session session, String msg) {
 		JSONObject jso=new JSONObject(msg);
-		if (jso.get("tipo").equals("DADO")) {
-			int idPartida=jso.getInt("idPartida");
-			String jugador=jso.getString("nombreJugador");
-			int dado=jso.getInt("puntos");
-			try {
-				Manager.get().tirarDado(idPartida, jugador, dado);
-			} catch (Exception e) {
-				send(jugador, e.getMessage());
-			}
-		}
+		String type = jso.getString("type");
+		WebSocketManager.get().ProcessMsg(type,jso.getJSONObject("data"));
 	}
 
 	private void send(String jugador, String texto) {

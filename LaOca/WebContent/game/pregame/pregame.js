@@ -7,6 +7,7 @@ $(document).ready(function(){
 	    	if(connected === false){
 	    		$("#div_pregame").load("pregame/pregame.html");
 	    	}else{
+	    		WSManager.connect();
 	    		SalasManager.ShowSalasDiv();
 	    	}
 	    }   

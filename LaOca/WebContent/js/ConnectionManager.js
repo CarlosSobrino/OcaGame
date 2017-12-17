@@ -1,5 +1,4 @@
 "use strict";
-var ws= null;
 var connected= false;
 var nick="";
 var flag =false;
@@ -35,24 +34,7 @@ var ConnectionManager={
 		};
 		request.send();	
 	},
-	connectWebSocket: function(){
-		ws=new WebSocket("ws://localhost:8080/LaOca/servidorDePartidas");
-		
-		ws.onopen = function() {
-			addMensaje("Websocket conectado");
-			alert("WebSocket connected");
-		}	
-		ws.onmessage = function(datos) {
-			var mensaje=datos.data;
-			mensaje=JSON.parse(mensaje);
-			if (mensaje.tipo=="DIFUSION") {
-				addMensaje(mensaje.mensaje);
-			} else if (mensaje.tipo=="COMIENZO") {
-				addMensaje("Comienza la partida");
-				comenzar(mensaje);
-			}
-		}	 
-	},
+	
 	logoutGoogle: function() {
 		alert("desconectado google");
 		ConnectionManager.logout();
@@ -63,4 +45,4 @@ var ConnectionManager={
 	        ConnectionManager.logout();
 	      });*/
     }
-}
+};

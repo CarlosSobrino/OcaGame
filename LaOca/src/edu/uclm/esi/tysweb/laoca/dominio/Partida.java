@@ -6,7 +6,7 @@ import java.util.Vector;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import edu.uclm.esi.tysweb.laoca.websockets.WSPartidas;
+import edu.uclm.esi.tysweb.laoca.websockets.WSServer;
 
 public class Partida {
 	private Vector<User> jugadores;
@@ -139,7 +139,7 @@ public class Partida {
 				// TODO: eliminar de la colección, mirar si la partida ha terminado
 				// y decirle al WSServer que quite a este jugador
 				this.jugadores.remove(jugador);
-				WSPartidas.removeSession(jugador);
+				WSServer.removeSession(jugador);
 			}
 		}
 	}
