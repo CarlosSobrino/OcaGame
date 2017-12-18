@@ -10,7 +10,7 @@ public class User {
 	private String pwd;
 	private int score;
 	private String nick;
-	protected Partida partida;
+	protected Sala partida;
 	private Session session;
 	private Casilla casilla;
 	private int turnosSinTirar;
@@ -74,7 +74,7 @@ public class User {
 		this.session=sesion;
 	}
 	
-	public void setPartida(Partida partida) {
+	public void setPartida(Sala partida) {
 		this.partida=partida;
 		if (partida!=null)
 			partida.addJugador(this);
@@ -87,7 +87,7 @@ public class User {
 	public Casilla getCasilla() {
 		return this.casilla;
 	}
-	public Partida getPartida() {
+	public Sala getPartida() {
 		return partida;
 	}
 	public Session getWSSession() {

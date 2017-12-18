@@ -8,13 +8,13 @@ import edu.uclm.esi.tysweb.laoca.persistencia.DAOUser;
 
 public class Manager {
 	private ConcurrentHashMap<String, User> usuarios;
-	private ConcurrentHashMap<Integer, Partida> partidasPendientes;
-	private ConcurrentHashMap<Integer, Partida> partidasEnJuego;
+	private ConcurrentHashMap<String, Sala> salasPendientes;
+	private ConcurrentHashMap<Integer, Sala> salasEnJuego;
 
 	private Manager(){
 		this.usuarios = new ConcurrentHashMap<>();
-		this.partidasPendientes = new ConcurrentHashMap<>();
-		this.partidasEnJuego = new ConcurrentHashMap<>();
+		this.salasPendientes = new ConcurrentHashMap<>();
+		this.salasEnJuego = new ConcurrentHashMap<>();
 	}
 
 	private static class ManagerHolder{
@@ -25,10 +25,13 @@ public class Manager {
 		return ManagerHolder.singleton;
 	}
 	
-	public int crearPartida(String nombreJugador, int numeroDeJugadores) {
-		User usuario = findUser(nombreJugador);
-		Partida partida = new Partida(usuario, numeroDeJugadores);
-		this.partidasPendientes.put(partida.getId(), partida);
+	public int crearPartida(String nombreJugador,String salaName) throws Exception {
+		if(salasPendientes.containsKey(salaName)) {
+			throw new Exception("Error!,Nombre de sala ya usado");
+		}
+		User user = findUser(nombreJugador);
+		Sala partida = new Sala(user, salaName);
+		this.salasPendientes.put(salaName, partida);
 		return partida.getId();
 	}
 
@@ -41,15 +44,21 @@ public class Manager {
 		return usuario;
 	}
 
-	public void addJugador(String nombreJugador) throws Exception{
-		if(this.partidasPendientes.isEmpty())
-			throw new Exception("No hay hijueputas partidas pendientes. Crea una, pendejo");
-		Partida partida = this.partidasPendientes.elements().nextElement();
+	public void addJugadorSala(String nombreJugador,String salaName) throws Exception{
+		if(this.salasPendientes.isEmpty())
+			throw new Exception("No hay salas pendientes, crea una sala");
+		if(!salasPendientes.containsKey(salaName)) {
+			throw new Exception("La sala seleccionada no existe");
+		}
+		if(!salasEnJuego.containsKey(salaName)) {
+			throw new Exception("La sala seleccionada no existe");
+		}
+		Sala partida = this.salasPendientes.elements().nextElement();
 		User usuario = findUser(nombreJugador);
 		partida.add(usuario);
 		if(partida.isReady()) {
-			this.partidasPendientes.remove(partida.getId());
-			this.partidasEnJuego.put(partida.getId(), partida);
+			this.salasPendientes.remove(partida.getId());
+			this.salasEnJuego.put(partida.getId(), partida);
 		}
 	}
 
@@ -95,13 +104,21 @@ public class Manager {
 	public User logout(String nick) {
 		return this.usuarios.remove(nick);
 	}
+	
+	public ConcurrentHashMap<String, Sala> getSalasPendientes() {
+		return salasPendientes;
+	}
+
+	public ConcurrentHashMap<Integer, Sala> getSalasEnJuego() {
+		return salasEnJuego;
+	}
 
 	public JSONObject tirarDado(int idPartida, String jugador, int dado) throws Exception {
-		Partida partida=this.partidasEnJuego.get(idPartida);
+		Sala partida=this.salasEnJuego.get(idPartida);
 		JSONObject mensaje=partida.tirarDado(jugador, dado);
 		mensaje.put("idPartida", idPartida);
 		mensaje.put("jugador", jugador);
-		partida.broadcast(mensaje);
+		//partida.broadcast(mensaje);
 		if (mensaje!=null && mensaje.opt("ganador")!=null) {
 			terminar(partida);
 		}
@@ -112,8 +129,12 @@ public class Manager {
 		return DAOUser.getScoreList();
 	}
 
-	private void terminar(Partida partida) {
+	private void terminar(Sala partida) {
 		partida.terminar();
-		partidasEnJuego.remove(partida.getId());
+		salasEnJuego.remove(partida.getId());
+	}
+	
+	public User getUserConnected(String nick) {
+		return usuarios.get(nick);
 	}
 }
