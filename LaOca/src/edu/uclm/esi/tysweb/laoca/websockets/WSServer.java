@@ -69,12 +69,9 @@ public class WSServer {
 		}
 	}
 
-	/*
 	public static void removeSession(User jugador) {
 		if (jugador.getWSSession()!=null) {
-			sesionesPorNombre.remove(jugador.getEmail());
-			sesionesPorId.remove(jugador.getWSSession().getId());
-			
+			sesionesPorUser.remove(jugador.getWSSession().getId());
 		}
-	}*/
+	}
 }
