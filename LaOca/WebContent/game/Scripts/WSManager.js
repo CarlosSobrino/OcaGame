@@ -4,18 +4,18 @@ var WSManager={
 			ws=new WebSocket("ws://localhost:8080/LaOca/WSServer");
 			
 			ws.onopen = function() {
-				alert("WebSocket connected");
+				
 			}	
 			
 			ws.onerror = function() {
-				alert("Ohhhh, se ha producido un error en la comunicación");
+				location.href ="../index.html";
 			}
 			
 			ws.onmessage = function(datos) {
 				var mensaje=datos.data;
 				mensaje=JSON.parse(mensaje);
-				if (mensaje.type=="SALAS_LIST") {
-					alert(mensaje.data);
+				if (mensaje.type=="INFO_SALAS") {
+					//TODO procesar el me saje y dibujar las salas
 				} else{
 					alert(mensaje.data);
 				}

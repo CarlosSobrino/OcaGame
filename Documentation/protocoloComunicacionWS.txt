@@ -1,0 +1,14 @@
+MSG SERVER--> CLIENT (Envia las salas que hay disponibles)
+{
+	type: INFO_SALAS
+	salas:	{
+			{	
+				name: sala_1
+				players:2
+			}
+			{	
+				name: sala_3
+				players:3
+			}
+		}
+}

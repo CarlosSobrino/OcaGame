@@ -1,7 +1,9 @@
 package edu.uclm.esi.tysweb.laoca.dominio;
 
+import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import edu.uclm.esi.tysweb.laoca.persistencia.DAOUser;
@@ -17,6 +19,10 @@ public class Manager {
 		this.salasEnJuego = new ConcurrentHashMap<>();
 	}
 
+	public ConcurrentHashMap<String, User> getUsuarios() {
+		return usuarios;
+	}
+
 	private static class ManagerHolder{
 		static Manager singleton = new Manager();
 	}
@@ -25,17 +31,16 @@ public class Manager {
 		return ManagerHolder.singleton;
 	}
 	
-	public int crearPartida(String nombreJugador,String salaName) throws Exception {
+	public int crearPartida(User user,String salaName) throws Exception {
 		if(salasPendientes.containsKey(salaName)) {
 			throw new Exception("Error!,Nombre de sala ya usado");
 		}
-		User user = findUser(nombreJugador);
 		Sala partida = new Sala(user, salaName);
 		this.salasPendientes.put(salaName, partida);
 		return partida.getId();
 	}
 
-	private User findUser(String nombreJugador) {
+	public User findUser(String nombreJugador) {
 		User usuario = this.usuarios.get(nombreJugador);
 		if(usuario == null) {
 			usuario = new User(nombreJugador);
@@ -44,7 +49,7 @@ public class Manager {
 		return usuario;
 	}
 
-	public void addJugadorSala(String nombreJugador,String salaName) throws Exception{
+	public void addJugadorSala(User user,String salaName) throws Exception{
 		if(this.salasPendientes.isEmpty())
 			throw new Exception("No hay salas pendientes, crea una sala");
 		if(!salasPendientes.containsKey(salaName)) {
@@ -53,12 +58,11 @@ public class Manager {
 		if(!salasEnJuego.containsKey(salaName)) {
 			throw new Exception("La sala seleccionada no existe");
 		}
-		Sala partida = this.salasPendientes.elements().nextElement();
-		User usuario = findUser(nombreJugador);
-		partida.add(usuario);
-		if(partida.isReady()) {
-			this.salasPendientes.remove(partida.getId());
-			this.salasEnJuego.put(partida.getId(), partida);
+		Sala sala = this.salasPendientes.elements().nextElement();
+		sala.add(user);
+		if(sala.isReady()) {
+			this.salasPendientes.remove(sala.getName());
+			this.salasEnJuego.put(sala.getId(), sala);
 		}
 	}
 
@@ -134,7 +138,18 @@ public class Manager {
 		salasEnJuego.remove(partida.getId());
 	}
 	
-	public User getUserConnected(String nick) {
-		return usuarios.get(nick);
+	public JSONObject getInfoSalasPendientes() {
+		JSONObject salas_data = new JSONObject();
+		Enumeration<Sala> i = salasPendientes.elements();
+		JSONArray salas = new JSONArray();
+		while(i.hasMoreElements()) {
+			Sala aux = i.nextElement();
+			JSONObject sala = new JSONObject();
+			sala.put("name", aux.getName());
+			sala.put("players", aux.getPlayers());
+			salas.put(sala);
+		}
+		salas_data.put("salas", salas);
+		return salas_data;
 	}
 }

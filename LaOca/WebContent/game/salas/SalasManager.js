@@ -19,11 +19,11 @@ var SalasManager={
 				if(sala_name !== ""){
 					SalasManager.SendNewSala(sala_name)
 					$("#div_createSalaOpen").empty();
+					$("#div_salas").empty();
 				}	
 			},
 			SendNewSala: function (sala_name){
-				//TODO ConnectionManager.SendSala(sala_name)
-				SalasManager.OnClickJoinSala(sala_name)
+				WSManager.send("NEW_SALA",sala_name)
 			},
 			InsertSala: function (sala_name, players){
 				var idSala= "idSala_"+sala_name;
@@ -53,8 +53,7 @@ var SalasManager={
 				}
 			},
 			OnClickJoinSala: function (sala_name){
-				alert(sala_name)
+			    WSManager.send("JOIN_SALA",sala_name);
 				$("#div_salas").empty();
-			    //TODO ConnectionManager.JoinSala(sala_name)
 			},
 }

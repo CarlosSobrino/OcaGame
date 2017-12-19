@@ -1,6 +1,7 @@
 package edu.uclm.esi.tysweb.laoca.websockets;
 
 import java.io.IOException;
+import java.lang.Thread.State;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,11 +15,8 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.json.JSONObject;
 
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
-
-import edu.uclm.esi.tysweb.laoca.dominio.Manager;
-import edu.uclm.esi.tysweb.laoca.dominio.Sala;
 import edu.uclm.esi.tysweb.laoca.dominio.User;
+import edu.uclm.esi.tysweb.laoca.dominio.User.StateUser;
 
 @ServerEndpoint(value="/WSServer", configurator=HttpSessionConfigurator.class)
 public class WSServer {
@@ -27,16 +25,12 @@ public class WSServer {
 	@OnOpen
 	public void open(Session sesion, EndpointConfig config) {
 		HttpSession httpSession=(HttpSession) config.getUserProperties().get(HttpSession.class.getName());
-		User User=(User) httpSession.getAttribute("user");
-		User.setWSSession(sesion);
-		System.out.println("Sesion " + sesion.getId());
-		sesionesPorUser.put(sesion.getId(), User);
-		/*
-		broadcast("Ha llegado " + User.getEmail());
-		Partida partida=User.getPartida();
-		if (partida.isReady())
-			partida.comenzar();
-		*/
+		User user=(User) httpSession.getAttribute("user");
+		user.setWSSession(sesion);
+		user.setState(StateUser.WAITING_SALA);
+		sesionesPorUser.put(sesion.getId(), user);
+		WebSocketManager.get();
+		WebSocketManager.sendSalasPendientes(user);
 	}
 	
 	@OnClose
@@ -58,20 +52,23 @@ public class WSServer {
 	
 	@OnMessage
 	public void recive(Session session, String msg) {
+		//DEBUG MSG
+		System.out.println(msg);
 		JSONObject jso=new JSONObject(msg);
 		String type = jso.getString("type");
 		try {
-			WebSocketManager.get().ProcessMsg(type,jso.getJSONObject("data"), sesionesPorUser.get(session.getId()).getNick());
+			WebSocketManager.get().ProcessMsg(sesionesPorUser.get(session.getId()),type,jso );
 		} catch (Exception e) {
 			JSONObject jso_err=new JSONObject();
 			jso_err.put("data", e.getMessage());
-			WebSocketManager.send( sesionesPorUser.get(session.getId()).getNick(), jso_err, "ERROR");
+			WebSocketManager.send( sesionesPorUser.get(session.getId()), jso_err, "ERROR");
 		}
 	}
 
-	public static void removeSession(User jugador) {
-		if (jugador.getWSSession()!=null) {
-			sesionesPorUser.remove(jugador.getWSSession().getId());
+	public static void removeSession(User user) {
+		if (user.getWSSession()!=null) {
+			sesionesPorUser.remove(user.getWSSession().getId());
+			user.setState(StateUser.DISCONECTED);
 		}
 	}
 }

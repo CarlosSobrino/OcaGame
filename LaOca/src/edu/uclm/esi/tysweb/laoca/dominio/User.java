@@ -14,9 +14,19 @@ public class User {
 	private Session session;
 	private Casilla casilla;
 	private int turnosSinTirar;
+	public enum StateUser {
+	    WAITING_SALA, CONNECTED, DISCONECTED, INSIDE_SALA,
+	    PLAYING
+	}
+	private StateUser state;
 	
 	
-	
+	public StateUser getState() {
+		return state;
+	}
+	public void setState(StateUser state) {
+		this.state = state;
+	}
 	public int getScore() {
 		return score;
 	}
@@ -33,10 +43,12 @@ public class User {
 	
 	public User(String email) {
 		this.email = email;
+		this.state = StateUser.CONNECTED;
 	}
 	public User(String email, String pwd) {
 		this.email = email;
 		this.pwd = pwd;
+		this.state = StateUser.CONNECTED;
 	}
 	
 	public User() {

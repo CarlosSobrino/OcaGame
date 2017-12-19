@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import edu.uclm.esi.tysweb.laoca.dominio.Manager;
 import edu.uclm.esi.tysweb.laoca.dominio.User;
+import edu.uclm.esi.tysweb.laoca.dominio.User.StateUser;
 
 public class WebSocketManager {
 	private WebSocketManager(){
@@ -26,13 +27,17 @@ public class WebSocketManager {
 		return WebSocketManagerHolder.singleton;
 	}
 	
-	public void ProcessMsg(String type, JSONObject data,String nick) throws JSONException, Exception {
+	public void ProcessMsg(User user,String type, JSONObject data) throws JSONException, Exception {
 		switch (type) {
 		case "NEW_SALA":
-			Manager.get().crearPartida(nick, data.getString("salaName"));
+			Manager.get().crearPartida(user, data.getString("salaName"));
+			user.setState(StateUser.INSIDE_SALA);
+			sendBroadcastSalasPendientes();
 			break;
 		case "JOIN_SALA":
-			Manager.get().addJugadorSala(nick, data.getString("salaName"));
+			Manager.get().addJugadorSala(user, data.getString("salaName"));
+			user.setState(StateUser.INSIDE_SALA);
+			sendBroadcastSalasPendientes();
 			break;
 
 
@@ -42,21 +47,23 @@ public class WebSocketManager {
 
 	}
 	
-	public static void send(String jugador, JSONObject data, String type) {
-		User user = Manager.get().getUserConnected(jugador);
+	public static void send(User user, JSONObject data, String type) {
 		Session sesion=user.getWSSession();
 		JSONObject jso=new JSONObject();
 		try {
 			jso.put("type", type);
 			jso.put("data", data);
 			sesion.getBasicRemote().sendText(jso.toString());
+			
+			//DEBUG DE MENSAJE
+			System.out.println(jso.toString());
 		} catch (IOException e) {
 			//TODO NO se si hay que cerrar la conexion aqui
 		}
 	}
 
-	public static void broadcast(String jugador, JSONObject data, String type,String salanameSala) {
-		ArrayList<User> players = Manager.get().getSalasEnJuego().get(salanameSala).getPlayers();
+	public static void broadcastSalasJugando(String jugador, JSONObject data, String type,String salaName) {
+		ArrayList<User> players = Manager.get().getSalasEnJuego().get(salaName).getPlayers();
 		Iterator<User> i = players.iterator();
 		while (i.hasNext()) {
 			User aux =i.next();
@@ -71,5 +78,19 @@ public class WebSocketManager {
 			}
 		}
 	}
+	public static void sendSalasPendientes(User user) {
+		JSONObject salas = Manager.get().getInfoSalasPendientes();
+		if(user.getState() == StateUser.WAITING_SALA) {
+			send(user, salas, "INFO_SALAS");
+		}
+	}
+	public static void sendBroadcastSalasPendientes() {
+		Enumeration<User> users = Manager.get().getUsuarios().elements();
+		while(users.hasMoreElements()) {
+			User aux=users.nextElement();
+			sendSalasPendientes(aux);
+		}
+	}
+	
 }
 
