@@ -5,24 +5,27 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StageManager : MonoBehaviour {
+public class StageManager : MonoBehaviour
+{
 
 
     void Awake()
     {
-    #if !UNITY_EDITOR && UNITY_WEBGL
+#if !UNITY_EDITOR && UNITY_WEBGL
     WebGLInput.captureAllKeyboardInput = false;
-    #endif
+#endif
     }
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
+        ShowMsg("Bienvenido");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
     public void GirarDado()
     {
         GameObject.Find("Dado").GetComponent<RollingDice>().GirarDado();
@@ -39,10 +42,11 @@ public class StageManager : MonoBehaviour {
             string[] words = data.Split('\n');
             GameObject.Find("Player" + words[0]).GetComponent<MovePlayer>().Move(Int32.Parse(words[1]));
         }
-        catch(Exception e){
+        catch (Exception e)
+        {
             Debug.LogError(e.ToString());
         }
-      
+
     }
     public void LanzarDadoPlayer(int i)
     {
@@ -63,6 +67,21 @@ public class StageManager : MonoBehaviour {
         {
             Debug.LogError(e.ToString());
         }
+    }
 
+
+    public void ShowMsg(string text)
+    {
+        GameObject.Find("PopUpText").GetComponent<Text>().text = text;
+        StartCoroutine(WaitSec(2.5f));
+
+
+    }
+
+    IEnumerator WaitSec(float i)
+    {
+        GameObject.Find("PopUpText").GetComponent<Text>().enabled = true;
+        yield return new WaitForSeconds(i);
+        GameObject.Find("PopUpText").GetComponent<Text>().enabled = false;
     }
 }

@@ -1,0 +1,3 @@
+
+("Access-Control-Allow-Origin",*) ó ("Access-Control-Allow-Origin","localhost/8080")
+("Access-Control-Allow-Credentials",true)

@@ -11,7 +11,8 @@
 
 	%>
 
-	<form action="SolicitarPwd.jsp" method="POST">
+	<form action="SolicitarPwd.jsp" method="POST" enctype="multipart/form-data">
+		Sube tu foto de perfil
 		<input type="file" placeholder="Selecciona tu foto" name="foto" accept="image/x-png,image/gif,image/jpeg"> <br>
 		<button type = "submit">Enviar</button>
 	</form>

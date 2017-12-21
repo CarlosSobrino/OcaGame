@@ -28,22 +28,28 @@ public class WebSocketManager {
 	}
 	
 	public void ProcessMsg(User user,String type, JSONObject data) throws JSONException, Exception {
-		switch (type) {
-		case "NEW_SALA":
-			Manager.get().crearPartida(user, data.getString("salaName"));
-			user.setState(StateUser.INSIDE_SALA);
-			sendBroadcastSalasPendientes();
-			break;
-		case "JOIN_SALA":
-			Manager.get().addJugadorSala(user, data.getString("salaName"));
-			user.setState(StateUser.INSIDE_SALA);
-			sendBroadcastSalasPendientes();
-			break;
+		System.out.println(data.toString());
+		try {
+			switch (type) {
+			case "NEW_SALA":
+				Manager.get().crearPartida(user, data.getString("data"));
+				user.setState(StateUser.INSIDE_SALA);
+				sendBroadcastSalasPendientes();
+				break;
+			case "JOIN_SALA":
+				Manager.get().addJugadorSala(user, data.getString("data"));
+				user.setState(StateUser.INSIDE_SALA);
+				sendBroadcastSalasPendientes();
+				break;
 
 
-		default:
-			break;
+			default:
+				break;
+			}
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
+
 
 	}
 	

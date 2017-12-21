@@ -15,7 +15,11 @@ var WSManager={
 				var mensaje=datos.data;
 				mensaje=JSON.parse(mensaje);
 				if (mensaje.type=="INFO_SALAS") {
-					//TODO procesar el me saje y dibujar las salas
+					//{"data":{"salas":[{"players":1,"name":"diego"},{"players":1,"name":"pepe"}]},"type":"INFO_SALAS"}
+					for(var i in mensaje.data.salas){
+						SalasManager.InsertSala(mensaje.data.salas[i].name, mensaje.data.salas[i].players);
+					}
+
 				} else{
 					alert(mensaje.data);
 				}

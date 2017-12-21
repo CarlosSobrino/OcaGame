@@ -12,9 +12,6 @@ public class Sala {
 
 	private String nameSala;
 	private ArrayList<User> players = new ArrayList<User>();
-	public ArrayList<User> getPlayers() {
-		return players;
-	}
 
 	private int playersToBeReady;
 	private int id;
@@ -141,7 +138,12 @@ public class Sala {
 		this.tablero.addJugador(jugador);
 	}
 	
-
+	public ArrayList<User> getPlayers() {
+		return players;
+	}
+	public int getPlayersSize() {
+		return players.size();
+	}
 	public User getGanador() {
 		return this.ganador;
 	}

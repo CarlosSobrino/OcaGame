@@ -11,7 +11,7 @@ import edu.uclm.esi.tysweb.laoca.persistencia.DAOUser;
 public class Manager {
 	private ConcurrentHashMap<String, User> usuarios;
 	private ConcurrentHashMap<String, Sala> salasPendientes;
-	private ConcurrentHashMap<Integer, Sala> salasEnJuego;
+	private ConcurrentHashMap<String, Sala> salasEnJuego;
 
 	private Manager(){
 		this.usuarios = new ConcurrentHashMap<>();
@@ -55,14 +55,14 @@ public class Manager {
 		if(!salasPendientes.containsKey(salaName)) {
 			throw new Exception("La sala seleccionada no existe");
 		}
-		if(!salasEnJuego.containsKey(salaName)) {
-			throw new Exception("La sala seleccionada no existe");
+		if(salasEnJuego.containsKey(salaName)) {
+			throw new Exception("La sala seleccionada ya en juego");
 		}
 		Sala sala = this.salasPendientes.elements().nextElement();
 		sala.add(user);
 		if(sala.isReady()) {
 			this.salasPendientes.remove(sala.getName());
-			this.salasEnJuego.put(sala.getId(), sala);
+			this.salasEnJuego.put(sala.getName(), sala);
 		}
 	}
 
@@ -140,16 +140,22 @@ public class Manager {
 	
 	public JSONObject getInfoSalasPendientes() {
 		JSONObject salas_data = new JSONObject();
-		Enumeration<Sala> i = salasPendientes.elements();
-		JSONArray salas = new JSONArray();
-		while(i.hasMoreElements()) {
-			Sala aux = i.nextElement();
-			JSONObject sala = new JSONObject();
-			sala.put("name", aux.getName());
-			sala.put("players", aux.getPlayers());
-			salas.put(sala);
+		try {
+
+			Enumeration<Sala> i = salasPendientes.elements();
+			JSONArray salas = new JSONArray();
+			while(i.hasMoreElements()) {
+				Sala aux = i.nextElement();
+				JSONObject sala = new JSONObject();
+				sala.put("name", aux.getName());
+				sala.put("players", aux.getPlayersSize());
+				salas.put(sala);
+			}
+			salas_data.put("salas", salas);
+		}catch(Exception e){
+			System.out.println(e.getMessage());
 		}
-		salas_data.put("salas", salas);
+
 		return salas_data;
 	}
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,17 +52,16 @@ public class RollingDice : MonoBehaviour {
 
     private Quaternion HitNumber(int side)
     {
-        Quaternion rotation;
         switch (side)
         {
-            case 1: return rotation = Quaternion.Euler(new Vector3(270, 0, 0));
-            case 2: return rotation = Quaternion.Euler(new Vector3(180, 0, 0));
-            case 3: return rotation = Quaternion.Euler(new Vector3(0, 0, 270));
-            case 4: return rotation = Quaternion.Euler(new Vector3(0, 0, 90));
-            case 5: return rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-            case 6: return rotation = Quaternion.Euler(new Vector3(90, 0, 0));
+            case 1: return Quaternion.Euler(new Vector3(270, 0, 0));
+            case 2: return Quaternion.Euler(new Vector3(180, 0, 0));
+            case 3: return Quaternion.Euler(new Vector3(0, 0, 270));
+            case 4: return Quaternion.Euler(new Vector3(0, 0, 90));
+            case 5: return Quaternion.Euler(new Vector3(0, 0, 0));
+            case 6: return Quaternion.Euler(new Vector3(90, 0, 0));
         }
-        return rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        return Quaternion.Euler(new Vector3(0, 0, 0));
     }
 
     public void ChangeState(int state)
