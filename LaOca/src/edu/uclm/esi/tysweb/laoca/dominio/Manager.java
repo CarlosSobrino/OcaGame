@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import edu.uclm.esi.tysweb.laoca.dominio.User.StateUser;
 import edu.uclm.esi.tysweb.laoca.persistencia.DAOUser;
 
 public class Manager {
@@ -31,13 +32,16 @@ public class Manager {
 		return ManagerHolder.singleton;
 	}
 	
-	public int crearPartida(User user,String salaName) throws Exception {
+	public String crearPartida(User user,String salaName) throws Exception {
+		if(!(user.getState() == StateUser.WAITING_SALA)) {
+			throw new Exception("Ya estas en una partida");
+		}
 		if(salasPendientes.containsKey(salaName)) {
 			throw new Exception("Error!,Nombre de sala ya usado");
 		}
 		Sala partida = new Sala(user, salaName);
 		this.salasPendientes.put(salaName, partida);
-		return partida.getId();
+		return partida.getName();
 	}
 
 	public User findUser(String nombreJugador) {
@@ -50,6 +54,9 @@ public class Manager {
 	}
 
 	public void addJugadorSala(User user,String salaName) throws Exception{
+		if(!(user.getState() == StateUser.WAITING_SALA)) {
+			throw new Exception("Ya estas en una partida");
+		}
 		if(this.salasPendientes.isEmpty())
 			throw new Exception("No hay salas pendientes, crea una sala");
 		if(!salasPendientes.containsKey(salaName)) {
@@ -61,7 +68,7 @@ public class Manager {
 		Sala sala = this.salasPendientes.elements().nextElement();
 		sala.add(user);
 		if(sala.isReady()) {
-			this.salasPendientes.remove(sala.getName());
+			//this.salasPendientes.remove(sala.getName());
 			this.salasEnJuego.put(sala.getName(), sala);
 		}
 	}
@@ -113,14 +120,14 @@ public class Manager {
 		return salasPendientes;
 	}
 
-	public ConcurrentHashMap<Integer, Sala> getSalasEnJuego() {
+	public ConcurrentHashMap<String, Sala> getSalasEnJuego() {
 		return salasEnJuego;
 	}
 
-	public JSONObject tirarDado(int idPartida, String jugador, int dado) throws Exception {
-		Sala partida=this.salasEnJuego.get(idPartida);
+	public JSONObject tirarDado(String salaName, String jugador, int dado) throws Exception {
+		Sala partida=this.salasEnJuego.get(salaName);
 		JSONObject mensaje=partida.tirarDado(jugador, dado);
-		mensaje.put("idPartida", idPartida);
+		mensaje.put("idPartida", salaName);
 		mensaje.put("jugador", jugador);
 		//partida.broadcast(mensaje);
 		if (mensaje!=null && mensaje.opt("ganador")!=null) {
@@ -135,7 +142,7 @@ public class Manager {
 
 	private void terminar(Sala partida) {
 		partida.terminar();
-		salasEnJuego.remove(partida.getId());
+		salasEnJuego.remove(partida.getName());
 	}
 	
 	public JSONObject getInfoSalasPendientes() {

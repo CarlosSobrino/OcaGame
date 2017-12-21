@@ -6,7 +6,8 @@ import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import edu.uclm.esi.tysweb.laoca.websockets.WSServer;
+import edu.uclm.esi.tysweb.laoca.dominio.User.StateUser;
+
 
 public class Sala {
 
@@ -25,18 +26,19 @@ public class Sala {
 		this.id=new Random().nextInt();
 		this.tablero=new Tablero();
 		this.nameSala = nameSala;
+		creador.setState(StateUser.INSIDE_SALA);
 	}
 
 	public int getId() {
 		return this.id;
 	}
 
-	public void add(User jugador) throws Exception {
+	public void add(User user) throws Exception {
 		if(players.size() >= playersToBeReady) {
 			throw new Exception("Sala ya llena");
 		}
-		players.add(jugador);
-
+		user.setState(StateUser.INSIDE_SALA);
+		players.add(user);
 	}
 	public String getName() {
 		return nameSala;

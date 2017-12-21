@@ -1,8 +1,5 @@
 package edu.uclm.esi.tysweb.laoca.websockets;
 
-import java.io.IOException;
-import java.lang.Thread.State;
-import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpSession;

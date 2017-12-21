@@ -35,11 +35,13 @@ public class WebSocketManager {
 				Manager.get().crearPartida(user, data.getString("data"));
 				user.setState(StateUser.INSIDE_SALA);
 				sendBroadcastSalasPendientes();
+				send(user,null,"LOAD_GAME");
 				break;
 			case "JOIN_SALA":
 				Manager.get().addJugadorSala(user, data.getString("data"));
 				user.setState(StateUser.INSIDE_SALA);
 				sendBroadcastSalasPendientes();
+				send(user,null,"LOAD_GAME");
 				break;
 
 

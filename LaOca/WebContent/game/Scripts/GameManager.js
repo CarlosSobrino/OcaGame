@@ -9,11 +9,13 @@ var GameManager= {
 		PermitirDado:function(){
 			gameInstance.SendMessage ('GameManager', 'PermitirDado');
 		},
-		ActualizarInfoTablero(player1,player2,player3,player4){
+		ActualizarInfoTablero:function(player1,player2,player3,player4){
 			var data = player1 +"\n"+player2 +"\n"+player3 +"\n"+player4 +"\n";
 			gameInstance.SendMessage ('GameManager', 'InformacionTablero',data);
 		},
 		LoadGame:function(){
+		      var insert_div='<div id="gameContainer" style="width: 960px; height: 600px"></div>';
+		      $("#div_game").append(insert_div);
 			  if(gameInstance === null){
 				  gameInstance=UnityLoader.instantiate("gameContainer", "Build/App.json", {onProgress: UnityProgress});
 			  }
@@ -43,6 +45,9 @@ var GameManager= {
 		},
 		GirarDado:function(){
 			gameInstance.SendMessage ('GameManager', 'GirarDado');
+		},
+		ShowMsg:function(msg){
+			gameInstance.SendMessage ('GameManager', 'ShowMsg',msg);
 		},
 		jugarSinRegistrar:function(){
 			var user = {
