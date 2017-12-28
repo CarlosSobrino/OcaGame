@@ -65,12 +65,12 @@ public class Sala {
 		sendInfoGame();
 		sendRolGame();
 		this.jugadorConElTurno=(new Random()).nextInt(this.players.size())+1;
-		System.out.println(this.jugadorConElTurno+" JUGADOR CON TURNO");
 		setTurnoAndSend(this.jugadorConElTurno);
 	}
 	private void setTurnoAndSend(int player) {
+		System.out.println(player+"JUGADOR CON TURNO");
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			System.out.println("NO PONER SLEEP AQUI");
@@ -79,12 +79,12 @@ public class Sala {
 		this.jugadorConElTurno=player;
 		User user=players.get(jugadorConElTurno);
 		if(user.getTurnosSinTirar() > 0){ //Si esta penalizado pasa turno al siguiente
-			user.setTurnosSinTirar(user.getTurnosSinTirar()-1);
 			sendMsg(user.getNick()+" tiene que estar sin tirar "+user.getTurnosSinTirar());
+			user.setTurnosSinTirar(user.getTurnosSinTirar()-1);
 			nextTurno();
 		}else { //Envia el turno del jugador que le toca
 			JSONObject jso=new JSONObject();
-			jso.put("player", player);
+			jso.put("player", this.jugadorConElTurno);
 			jso.put("name", players.get(player).getNick());
 			sendBroadcastSala(jso, "TURNO_GAME");
 		}
@@ -148,6 +148,9 @@ public class Sala {
 				return;
 			}else { //Mensaje de que ha movido
 				sendMsg(user.getCasilla().getMensaje()); //Por ejemplo de oca a oca
+				Thread.sleep(1000);
+				setTurnoAndSend(this.jugadorConElTurno);
+				return;
 			}
 		}
 		if (user.getCasilla().getPos()==57) { // Muerte
@@ -156,26 +159,27 @@ public class Sala {
 			nextTurno();
 			return;
 		}
-		if (destino.getPos()==62) {
+		if (user.getCasilla().getPos()==62) {
 			//TODO Ha ganado X
 			sendMsg("Ha ganado "+user.getNick());
 			return;
 		}
 		sancionarSinTirar(user);
-		
+		nextTurno();
 	}
 	private void sancionarSinTirar(User user) {
 		int turnosSinTirar=user.getCasilla().getTurnosSinTirar(); //Si ha caido en una casilla de carcel, etc...
 		if (turnosSinTirar>0) {
 			sendMsg(user.getNick() + " tiene que estar "+turnosSinTirar+" turnos sin tirar");
 			user.setTurnosSinTirar(user.getCasilla().getTurnosSinTirar());
-			nextTurno();
 		}
 	}
 	
 	private void nextTurno() {
-		int next=this.jugadorConElTurno++;
+		int next=this.jugadorConElTurno;
+		next= next + 1;
 		if(next>4) next=1;
+		System.out.println("Cambio de turno de :"+this.jugadorConElTurno+" a :"+next);
 		setTurnoAndSend(next);
 	}
 

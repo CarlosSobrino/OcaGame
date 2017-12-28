@@ -47,7 +47,8 @@ var GameManager= {
 		TirarDadoButton:function(){
 			GameManager.GirarDado();
 			setTimeout(function(){
-				var aleatorio = Math.round(Math.random()*6);
+				//TODO SALE 0 MAL, solo puede salir del 1-6
+				var aleatorio = randomIntFromInterval(1,6);
 				WSManager.send("DADO_GAME",aleatorio);
 				gameInstance.SendMessage ('GameManager', 'LanzarDadoPlayer',aleatorio);
 			}, 1300);
@@ -93,6 +94,11 @@ function sleep(milliseconds) {
     }
   }
 };
+
+function randomIntFromInterval(min,max)
+{
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
 
 
 

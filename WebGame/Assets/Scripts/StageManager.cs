@@ -56,7 +56,7 @@ public class StageManager : MonoBehaviour
         }
 
     }
-public void LanzarDadoPlayer(int i)
+    public void LanzarDadoPlayer(int i)
     {
         GameObject.Find("Dado").GetComponent<RollingDice>().RollDice(i);
     }
