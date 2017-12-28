@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class StageManager : MonoBehaviour
 {
-
+    public Camera LoadCamera;
+    public Camera TableroCamera;
 
     void Awake()
     {
@@ -18,13 +19,19 @@ public class StageManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        ShowMsg("Bienvenido");
+        changeCameraLoad();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void StartGame()
+    {
+        changeCameraTablero();
+        ShowMsg("Bienvenido");
     }
     public void GirarDado()
     {
@@ -34,6 +41,7 @@ public class StageManager : MonoBehaviour
     public void PermitirDado()
     {
         GameObject.Find("Dado").GetComponent<RollingDice>().ChangeState(1);
+
     }
     public void MovePlayer(string data)
     {
@@ -48,9 +56,22 @@ public class StageManager : MonoBehaviour
         }
 
     }
-    public void LanzarDadoPlayer(int i)
+public void LanzarDadoPlayer(int i)
     {
         GameObject.Find("Dado").GetComponent<RollingDice>().RollDice(i);
+    }
+    public void MoveCasillaPlayer(string data)
+    {
+        try
+        {
+            string[] words = data.Split('\n');
+            GameObject.Find("Player" + words[0]).GetComponent<MovePlayer>().MoveCasilla(Int32.Parse(words[1]));
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.ToString());
+        }
+
     }
 
     public void InformacionTablero(string data)
@@ -83,5 +104,16 @@ public class StageManager : MonoBehaviour
         GameObject.Find("PopUpText").GetComponent<Text>().enabled = true;
         yield return new WaitForSeconds(i);
         GameObject.Find("PopUpText").GetComponent<Text>().enabled = false;
+    }
+
+    private void changeCameraTablero()
+    {
+        TableroCamera.enabled = true;
+        LoadCamera.enabled = false;
+    }
+    private void changeCameraLoad()
+    {
+        TableroCamera.enabled = false;
+        LoadCamera.enabled = true;
     }
 }

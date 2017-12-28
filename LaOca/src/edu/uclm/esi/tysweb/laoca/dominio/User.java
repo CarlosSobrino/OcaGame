@@ -10,13 +10,13 @@ public class User {
 	private String pwd;
 	private int score;
 	private String nick;
-	protected Sala partida;
+	protected Sala sala;
 	private Session session;
 	private Casilla casilla;
 	private int turnosSinTirar;
 	public enum StateUser {
 	    WAITING_SALA, CONNECTED, DISCONECTED, INSIDE_SALA,
-	    PLAYING
+	    PLAYING,READY
 	}
 	private StateUser state;
 	
@@ -86,10 +86,10 @@ public class User {
 		this.session=sesion;
 	}
 	
-	public void setPartida(Sala partida) {
-		this.partida=partida;
-		if (partida!=null)
-			partida.addJugador(this);
+	public void setSala(Sala sala) {
+		this.sala=sala;
+		if (sala!=null)
+			sala.addJugador(this);
 	}
 
 	public void enviar(JSONObject jso) throws IOException {
@@ -99,8 +99,8 @@ public class User {
 	public Casilla getCasilla() {
 		return this.casilla;
 	}
-	public Sala getPartida() {
-		return partida;
+	public Sala getSala() {
+		return sala;
 	}
 	public Session getWSSession() {
 		return session;
@@ -120,6 +120,6 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return this.email + " jugando en " + (this.partida!=null ? this.partida.getId() : "ninguna ") + ", " + this.casilla.getPos() + ", turnos: " + this.turnosSinTirar;
+		return this.email + " jugando en " + (this.sala!=null ? this.sala.getName() : "ninguna ") + ", " + this.casilla.getPos() + ", turnos: " + this.turnosSinTirar;
 	}
 }

@@ -32,16 +32,20 @@ public class Manager {
 		return ManagerHolder.singleton;
 	}
 	
-	public String crearPartida(User user,String salaName) throws Exception {
+	public String crearSala(User user,String salaName) throws Exception {
 		if(!(user.getState() == StateUser.WAITING_SALA)) {
 			throw new Exception("Ya estas en una partida");
 		}
 		if(salasPendientes.containsKey(salaName)) {
 			throw new Exception("Error!,Nombre de sala ya usado");
 		}
-		Sala partida = new Sala(user, salaName);
-		this.salasPendientes.put(salaName, partida);
-		return partida.getName();
+		System.out.println("1");
+		//DA ERROR AL CREAR UNA NUEVA SALA
+		Sala sala = new Sala(user, salaName);
+		user.setSala(sala);
+		this.salasPendientes.put(salaName, sala);
+		System.out.println(this.salasPendientes.get(salaName).getName());
+		return salaName;
 	}
 
 	public User findUser(String nombreJugador) {
@@ -67,7 +71,8 @@ public class Manager {
 		}
 		Sala sala = this.salasPendientes.elements().nextElement();
 		sala.add(user);
-		if(sala.isReady()) {
+		user.setSala(sala);
+		if(sala.isCompleted()) {
 			//this.salasPendientes.remove(sala.getName());
 			this.salasEnJuego.put(sala.getName(), sala);
 		}
@@ -124,18 +129,6 @@ public class Manager {
 		return salasEnJuego;
 	}
 
-	public JSONObject tirarDado(String salaName, String jugador, int dado) throws Exception {
-		Sala partida=this.salasEnJuego.get(salaName);
-		JSONObject mensaje=partida.tirarDado(jugador, dado);
-		mensaje.put("idPartida", salaName);
-		mensaje.put("jugador", jugador);
-		//partida.broadcast(mensaje);
-		if (mensaje!=null && mensaje.opt("ganador")!=null) {
-			terminar(partida);
-		}
-		return mensaje;
-	}
-
 	public JSONObject getScores() throws Exception {
 		return DAOUser.getScoreList();
 	}
@@ -162,7 +155,6 @@ public class Manager {
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
-
 		return salas_data;
 	}
 }

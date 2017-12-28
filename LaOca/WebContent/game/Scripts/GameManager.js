@@ -6,6 +6,9 @@ var GameManager= {
 			var data = in_player +"\n"+dado
 			gameInstance.SendMessage ('GameManager', 'MovePlayer', data);
 		},
+		StartGame:function(){
+			gameInstance.SendMessage ('GameManager', 'StartGame');
+		},
 		PermitirDado:function(){
 			gameInstance.SendMessage ('GameManager', 'PermitirDado');
 		},
@@ -17,7 +20,7 @@ var GameManager= {
 		      var insert_div='<div id="gameContainer" style="width: 960px; height: 600px"></div>';
 		      $("#div_game").append(insert_div);
 			  if(gameInstance === null){
-				  gameInstance=UnityLoader.instantiate("gameContainer", "Build/App.json", {onProgress: UnityProgress});
+				  gameInstance=UnityLoader.instantiate("gameContainer", "Build/App.json",{onProgress: UnityProgress});
 			  }
 		},
 		TirarDadoNumero:function(in_player,dado){
@@ -25,6 +28,12 @@ var GameManager= {
 			setTimeout(function(){
 				gameInstance.SendMessage ('GameManager', 'LanzarDadoPlayer',dado);
 				GameManager.MoveFicha(in_player, dado);
+			},1300);
+		},
+		MoveCasilla:function(in_player,casilla){
+			var data = in_player +"\n"+casilla
+			setTimeout(function(){
+				gameInstance.SendMessage ('GameManager', 'MoveCasillaPlayer',data);
 			},1300);
 		},
 		TirarDadoRandom:function(in_player){
@@ -39,9 +48,10 @@ var GameManager= {
 			GameManager.GirarDado();
 			setTimeout(function(){
 				var aleatorio = Math.round(Math.random()*6);
+				WSManager.send("DADO_GAME",aleatorio);
 				gameInstance.SendMessage ('GameManager', 'LanzarDadoPlayer',aleatorio);
-				GameManager.MoveFicha(_player, aleatorio);
 			}, 1300);
+
 		},
 		GirarDado:function(){
 			gameInstance.SendMessage ('GameManager', 'GirarDado');

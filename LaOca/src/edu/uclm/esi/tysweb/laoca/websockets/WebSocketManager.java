@@ -32,7 +32,7 @@ public class WebSocketManager {
 		try {
 			switch (type) {
 			case "NEW_SALA":
-				Manager.get().crearPartida(user, data.getString("data"));
+				Manager.get().crearSala(user, data.getString("data"));
 				user.setState(StateUser.INSIDE_SALA);
 				sendBroadcastSalasPendientes();
 				send(user,null,"LOAD_GAME");
@@ -43,13 +43,20 @@ public class WebSocketManager {
 				sendBroadcastSalasPendientes();
 				send(user,null,"LOAD_GAME");
 				break;
-
-
+			case "READY":
+				user.setState(StateUser.READY);
+				user.getSala().isReady();
+				break;
+			case "DADO_GAME":
+				int dado=data.getInt("data");
+				user.getSala().tirarDado(user, dado);
+				break;
 			default:
 				break;
 			}
 		}catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("Error! "+e.getMessage()+" - "+e.toString()+" - "+e.getLocalizedMessage()
+			);
 		}
 
 
