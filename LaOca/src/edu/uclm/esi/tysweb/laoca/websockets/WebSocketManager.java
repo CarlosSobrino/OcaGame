@@ -4,7 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
+import javax.websocket.RemoteEndpoint;
+import javax.websocket.RemoteEndpoint.Async;
+import javax.websocket.SendHandler;
+import javax.websocket.SendResult;
 import javax.websocket.Session;
 
 import org.json.JSONException;
@@ -61,7 +67,45 @@ public class WebSocketManager {
 
 
 	}
+	/*public static void setTimeoutUser(User user,String msg) {
+		Async asyncHandle = user.getWSSession().getAsyncRemote();
+		asyncHandle.setSendTimeout(10000); //2000 ms
+		Future<Void> tracker = asyncHandle.sendText(msg); //will timeout after 2 seconds
+		try {
+			tracker.get();
+			if(tracker.isDone()) {
+				disconnect(user);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+	*/
+	public void setTimeoutUser(User user, String msg){
+		System.out.println("StartTimeOUT "+user.getNick());
+		Async asyncHandle = user.getWSSession().getAsyncRemote();
+		asyncHandle.setSendTimeout(10000); //1 second
+		asyncHandle.sendText(msg, 
+				new SendHandler(){
+		      	@Override
+		      		public void onResult(SendResult result) {
+				        if(!result.isOK()){
+				        	System.out.println("Async failure: "+ result.getException());
+				        }else {
+				        	System.out.println("TimeOut finish "+user.getNick());
+				        }
+		      		}
+		  		}); //will timeout after 2 seconds
+		
+	}
 	
+	public static void disconnect(User user) {
+		System.out.println("Timeout");
+	}
 	public static void send(User user, JSONObject data, String type) {
 		Session sesion=user.getWSSession();
 		JSONObject jso=new JSONObject();

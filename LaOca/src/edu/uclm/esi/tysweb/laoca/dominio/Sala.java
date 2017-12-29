@@ -87,6 +87,8 @@ public class Sala {
 			jso.put("player", this.jugadorConElTurno);
 			jso.put("name", players.get(player).getNick());
 			sendBroadcastSala(jso, "TURNO_GAME");
+			//TODO AQUI IRIA EL TIMEOUT
+			//WebSocketManager.get().setTimeoutUser(user, "Lanza dado antes de 10 segundos o te echo");
 		}
 	}
 	
