@@ -122,4 +122,11 @@ public class User {
 	public String toString() {
 		return this.email + " jugando en " + (this.sala!=null ? this.sala.getName() : "ninguna ") + ", " + this.casilla.getPos() + ", turnos: " + this.turnosSinTirar;
 	}
+	public void exitSala() {
+		this.sala=null;
+		this.casilla=null;
+		this.state=null;
+		this.turnosSinTirar=0;
+		this.state = StateUser.CONNECTED;
+	}
 }

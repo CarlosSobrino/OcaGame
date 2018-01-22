@@ -12,6 +12,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.json.JSONObject;
 
+import edu.uclm.esi.tysweb.laoca.dominio.Manager;
 import edu.uclm.esi.tysweb.laoca.dominio.User;
 import edu.uclm.esi.tysweb.laoca.dominio.User.StateUser;
 
@@ -32,19 +33,8 @@ public class WSServer {
 	
 	@OnClose
 	public void exit(Session session) {
-		sesionesPorUser.remove(session.getId());
-		/*
-		Enumeration<String> eNombres = sesionesPorUser.keys();
-		String nombre;
-		while (eNombres.hasMoreElements()) {
-			nombre=eNombres.nextElement();
-			Session sesion=sesionesPorUser.get(nombre);
-			if (sesion.getId().equals(session.getId())) {
-				sesionesPorNombre.remove(nombre);
-				broadcast("Se ha ido " + nombre);
-				break;
-			}
-		}*/
+		User user =sesionesPorUser.remove(session.getId());
+		if(user.getSala() != null) Manager.get().abortSala(user);
 	}
 	
 	@OnMessage

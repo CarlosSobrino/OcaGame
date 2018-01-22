@@ -133,9 +133,10 @@ public class Manager {
 		return DAOUser.getScoreList();
 	}
 
-	private void terminar(Sala partida) {
-		partida.terminar();
-		salasEnJuego.remove(partida.getName());
+	public void abortSala(User user) {
+		Sala aux = user.getSala();
+		aux.abortGame(user);
+		salasEnJuego.remove(aux.getName());
 	}
 	
 	public JSONObject getInfoSalasPendientes() {

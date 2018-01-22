@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.security.auth.Destroyable;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -20,7 +22,6 @@ public class Sala {
 	private int playersToBeReady;
 	private int jugadorConElTurno;
 	private Tablero tablero;
-	private User ganador;
 
 	public Sala(User creador,String nameSala) {
 		this.players = new ConcurrentHashMap<>();
@@ -145,8 +146,7 @@ public class Sala {
 			sendMsg(user.getNick()+" mueve a casilla "+user.getCasilla().getPos());
 			Thread.sleep(2000);
 			if (user.getCasilla().getPos()==62) { // Llegada
-				//TODO Ha ganado X
-				sendMsg("Ha ganado "+user.getNick());
+				win(user);
 				return;
 			}else { //Mensaje de que ha movido
 				sendMsg(user.getCasilla().getMensaje()); //Por ejemplo de oca a oca
@@ -162,13 +162,43 @@ public class Sala {
 			return;
 		}
 		if (user.getCasilla().getPos()==62) {
-			//TODO Ha ganado X
+			win(user);
 			sendMsg("Ha ganado "+user.getNick());
 			return;
 		}
 		sancionarSinTirar(user);
 		nextTurno();
 	}
+	private void win(User user) {
+		sendMsg("Ha ganado "+user.getNick());
+		user.setScore(user.getScore()+10);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		sendWinner(user);
+		finishGame();
+		
+	}
+	private void sendWinner(User user) {
+		JSONObject data = new JSONObject();
+		data.put("winner", user.getNick());
+		sendBroadcastSala(data, "WIN");
+	}
+	private void finishGame() {
+		for(int i=1;i<=4;i++) {
+			players.remove(i).exitSala();
+		}
+	}
+
+	public void abortGame(User user) {
+		JSONObject data = new JSONObject();
+		data.put("abort", user.getNick());
+		sendBroadcastSala(data, "ABORT");
+		finishGame();
+	}
+	
 	private void sancionarSinTirar(User user) {
 		int turnosSinTirar=user.getCasilla().getTurnosSinTirar(); //Si ha caido en una casilla de carcel, etc...
 		if (turnosSinTirar>0) {
@@ -200,17 +230,7 @@ public class Sala {
 	public int getPlayersSize() {
 		return players.size();
 	}
-	public User getGanador() {
-		return this.ganador;
-	}
 
-	public void terminar() {
-		for(int j=1;j<=this.players.size();j++) {
-			User user=this.players.get(j);
-			user.setSala(null);
-			user.setState(StateUser.CONNECTED);
-		}
-	}
 	private void moveUser(User user) {
 		JSONObject jso = new JSONObject();
 		jso.put("player",jugadorConElTurno);

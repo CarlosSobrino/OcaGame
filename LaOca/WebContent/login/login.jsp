@@ -17,8 +17,6 @@ try {
 		respuesta.put("result", "ERROR");
 		respuesta.put("mensaje", "Email o contraseña incorrectos");
 	}
-	//User usuario=Manager.get().login(email, pwd, tipoDeBroker);
-	//session.setAttribute("usuario", usuario);
 
 }
 catch (Exception e) {

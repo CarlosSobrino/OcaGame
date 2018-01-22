@@ -1,7 +1,7 @@
 var ws=null;
 var WSManager={
 		connect: function(){
-			ws=new WebSocket("ws://localhost:8080/LaOca/WSServer");
+			ws=new WebSocket("ws://localhost:8080/LaOca/WSServer"); //TODO cambiar por url generica
 			
 			ws.onopen = function() {
 				
@@ -56,6 +56,14 @@ var WSManager={
 						break;
 					case "MSG_GAME":
 						GameManager.ShowMsg(mensaje.data.msg);
+						break;
+					case "WIN":
+						gameInstance=null;
+						 document.getElementById('gameContainer').innerHTML='¡Ha ganado '+mensaje.data.winner+'!';
+						break;
+					case "ABORT":
+						gameInstance=null;
+						 document.getElementById('gameContainer').innerHTML='La partida ha terminado porque '+mensaje.data.abort+' ha abandonado la partida :(';
 						break;
 					}
 				}
