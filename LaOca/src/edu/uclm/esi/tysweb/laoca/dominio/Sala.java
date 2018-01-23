@@ -252,4 +252,17 @@ public class Sala {
 		r+="\n";
 		return r;
 	}
+
+	public void sendChat(User user, String msg) {
+		JSONObject jso=new JSONObject();
+		jso.put("nick", user.getNick());
+		jso.put("msg", msg);
+		for(int j=1;j<=this.players.size();j++) {
+			User aux=this.players.get(j);
+			if(!(aux.getNick().equals(user.getNick()))) {
+				WebSocketManager.send(aux, jso, "CHAT");
+			}
+		}
+		System.out.println("DEBUG");
+	}
 }

@@ -1,7 +1,6 @@
 "use strict";
-$(document).ready(function(){
+function openChat(){
     var box = null;
-      $("#chat").click(function(event, ui) {
           if(box) {
               box.chatbox("option", "boxManager").toggleBox();
           }
@@ -10,9 +9,15 @@ $(document).ready(function(){
                                             user:{key : "value"},
                                             title : "Chat",
                                             messageSent : function(id, user, msg) {
-                                                $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
-                                                //TODO Enviar por websocket  el mensaje
+                                                $("#div_chat").chatbox("option", "boxManager").addMsg(id, msg);
+                                                WSManager.send("CHAT",msg);
                                             }});
           }
-      });
-});
+}
+function printChat(nick,msg){
+	try{
+		$("#div_chat").chatbox("option", "boxManager").addMsg(nick, msg);
+	}catch (e) {
+		// TODO: handle exception
+	}
+}

@@ -22,6 +22,7 @@ var GameManager= {
 			  if(gameInstance === null){
 				  gameInstance=UnityLoader.instantiate("gameContainer", "Build/App.json",{onProgress: UnityProgress});
 			  }
+			  openChat();
 		},
 		TirarDadoNumero:function(dado){
 			GameManager.GirarDado();

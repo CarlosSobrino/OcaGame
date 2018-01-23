@@ -64,6 +64,9 @@ var WSManager={
 						gameInstance=null;
 						 document.getElementById('gameContainer').innerHTML='La partida ha terminado porque '+mensaje.data.abort+' ha abandonado la partida :(';
 						break;
+					case "CHAT":
+						printChat(mensaje.data.nick,mensaje.data.msg);
+						break;
 					}
 				}
 				catch(err) {

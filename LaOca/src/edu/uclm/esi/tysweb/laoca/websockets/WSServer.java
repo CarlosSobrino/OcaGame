@@ -40,10 +40,10 @@ public class WSServer {
 	@OnMessage
 	public void recive(Session session, String msg) {
 		//DEBUG MSG
-		System.out.println(msg);
+		System.out.println("Recieve: "+msg);
 		JSONObject jso=new JSONObject(msg);
-		String type = jso.getString("type");
 		try {
+			String type = jso.getString("type");
 			WebSocketManager.get().ProcessMsg(sesionesPorUser.get(session.getId()),type,jso );
 		} catch (Exception e) {
 			JSONObject jso_err=new JSONObject();

@@ -34,7 +34,6 @@ public class WebSocketManager {
 	}
 	
 	public void ProcessMsg(User user,String type, JSONObject data) throws JSONException, Exception {
-		System.out.println(data.toString());
 		try {
 			switch (type) {
 			case "NEW_SALA":
@@ -56,6 +55,9 @@ public class WebSocketManager {
 			case "DADO_GAME":
 				int dado=data.getInt("data");
 				user.getSala().tirarDado(user, dado);
+				break;
+			case "CHAT":
+				user.getSala().sendChat(user, data.getString("data"));
 				break;
 			default:
 				break;
@@ -115,7 +117,7 @@ public class WebSocketManager {
 			sesion.getBasicRemote().sendText(jso.toString());
 			
 			//DEBUG DE MENSAJE
-			System.out.println(jso.toString());
+			System.out.println("Send WS: "+jso.toString());
 		} catch (IOException e) {
 			//TODO NO se si hay que cerrar la conexion aqui
 		}
