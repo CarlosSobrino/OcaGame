@@ -1,12 +1,11 @@
 var ws=null;
 var WSManager={
 		connect: function(){
-			ws=new WebSocket("ws://localhost:8080/LaOca/WSServer"); //TODO cambiar por url generica
-			
+			//TODO PROBAR SI FUNCIONA
+			ws=new WebSocket("ws://"+window.location.hostname+":"+window.location.port+":8080/LaOca/WSServer");
 			ws.onopen = function() {
 				
-			}	
-			
+			}
 			ws.onerror = function() {
 				location.href ="../index.html";
 			}

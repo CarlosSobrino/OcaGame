@@ -23,12 +23,12 @@ var GameManager= {
 				  gameInstance=UnityLoader.instantiate("gameContainer", "Build/App.json",{onProgress: UnityProgress});
 			  }
 		},
-		TirarDadoNumero:function(in_player,dado){
+		TirarDadoNumero:function(dado){
 			GameManager.GirarDado();
 			setTimeout(function(){
-				gameInstance.SendMessage ('GameManager', 'LanzarDadoPlayer',dado);
-				GameManager.MoveFicha(in_player, dado);
-			},1300);
+				WSManager.send("DADO_GAME",dado);
+				gameInstance.SendMessage ('GameManager', 'LanzarDadoPlayer',aleatorio);
+			}, 1300);
 		},
 		MoveCasilla:function(in_player,casilla){
 			var data = in_player +"\n"+casilla
