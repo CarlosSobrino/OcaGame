@@ -13,6 +13,9 @@ try {
 		session.setAttribute("user", user);
 		respuesta.put("result", "OK");
 		respuesta.put("mensaje", email + " conectado");
+		Cookie cookie=new Cookie("pwd", pwd);
+		cookie.setMaxAge(3000000);
+		response.addCookie(cookie);
 	}else{
 		respuesta.put("result", "ERROR");
 		respuesta.put("mensaje", "Email o contraseña incorrectos");

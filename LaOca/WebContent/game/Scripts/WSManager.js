@@ -2,7 +2,7 @@ var ws=null;
 var WSManager={
 		connect: function(){
 			//TODO PROBAR SI FUNCIONA
-			ws=new WebSocket("ws://"+window.location.hostname+":"+window.location.port+":8080/LaOca/WSServer");
+			ws=new WebSocket("ws://"+window.location.hostname+":"+window.location.port+"/LaOca/WSServer");
 			ws.onopen = function() {
 				
 			}

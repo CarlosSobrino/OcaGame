@@ -1,4 +1,9 @@
 "use strict";
+$(document).ready(function(){
+		if(getCookie("pwd")!=undefined){
+			document.getElementById("pwd").value = getCookie("pwd");
+		}
+});
 function validate(){
 	var login = {
 		email : document.getElementById("email").value,
@@ -20,3 +25,9 @@ function validate(){
 	};
 	request.send("login="+JSON.stringify(login));
 }
+
+function getCookie(name) {
+	  var value = "; " + document.cookie;
+	  var parts = value.split("; " + name + "=");
+	  if (parts.length == 2) return parts.pop().split(";").shift();
+	}

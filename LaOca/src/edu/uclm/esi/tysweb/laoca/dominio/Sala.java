@@ -192,7 +192,7 @@ public class Sala {
 		}
 	}
 
-	public void abortGame(User user) {
+	public void abortGame(User user) throws Exception{
 		JSONObject data = new JSONObject();
 		data.put("abort", user.getNick());
 		sendBroadcastSala(data, "ABORT");

@@ -134,9 +134,12 @@ public class Manager {
 	}
 
 	public void abortSala(User user) {
-		Sala aux = user.getSala();
-		aux.abortGame(user);
-		salasEnJuego.remove(aux.getName());
+		try {
+			Sala aux = user.getSala();
+			aux.abortGame(user);
+			salasEnJuego.remove(aux.getName());
+		}catch (Exception e) {
+		}
 	}
 	
 	public JSONObject getInfoSalasPendientes() {
