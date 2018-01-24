@@ -103,18 +103,18 @@ public class DAOUser {
 		//Check if the user exists before insert
 		if(!checkExistUser(user.getEmail(),user.getPwd(),db_client)) {
 			MongoBroker.get().close(db_client);
-			throw new Exception("Email o contraseña incorrrecto");
+			throw new Exception("Email o contraseña incorrecto");
 		}
 		BsonDocument criteria = new BsonDocument();
 		criteria.append("email", new BsonString(user.getEmail()));
 		
 		BsonDocument updateCirteria = new BsonDocument();
-		updateCirteria.append("pwd", new BsonString(newPassword));
 		
+		updateCirteria.append("$set",new BsonDocument("pwd", new BsonString(newPassword)));
 		
 		MongoDatabase db = db_client.getDatabase("LaOca");
 		MongoCollection<BsonDocument> users = db.getCollection("users",BsonDocument.class);
-		users.findOneAndUpdate(criteria, updateCirteria);
+		users.updateOne(criteria, updateCirteria);
 		MongoBroker.get().close(db_client);
 		return true;
 	}

@@ -63,8 +63,8 @@ public class User {
 	public void SetEmail(String email) {
 		this.email = email;
 	}
-	public void SetPwd(String email) {
-		this.email = email;
+	public void SetPwd(String pwd) {
+		this.pwd = pwd;
 	}
 	
 	public boolean updateScoreDB(int newScore) throws Exception {
@@ -74,7 +74,10 @@ public class User {
 		this.score=newScore;
 		return true;
 	}
-	public boolean changePasswordDB(String newPassword) throws Exception {
+	public boolean changePasswordDB(String old_pwd,String newPassword) throws Exception {
+		if(!old_pwd.equals(pwd)) {
+			return false;
+		}
 		if( DAOUser.changePassword(this, newPassword)){
 			this.SetPwd(newPassword);
 			return true;

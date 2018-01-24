@@ -103,20 +103,6 @@ public class Manager {
 		}
 		return user != null;
 	}
-
-	public boolean changePassword(String email,String pwd,String newPassword) throws Exception{
-		User user = DAOUser.login(email, pwd);
-		String nick = user.getNick();
-		boolean aux=false;
-		if(user != null) {
-			user.changePasswordDB(newPassword);
-			usuarios.put(nick, user);
-			aux=true;
-		}
-		return aux;
-	}
-
-
 	public User logout(String nick) {
 		return this.usuarios.remove(nick);
 	}

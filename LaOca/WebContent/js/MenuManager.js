@@ -14,6 +14,7 @@ var MenuManager={
 	  desconectarseGoogle:   '<li><a href="#" onclick="ConnectionManager.logoutGoogle();return false;" ><span class="glyphicon glyphicon-log-in"></span> Desconectarse</a></li>',
 	  finalDerecha : '</ul>',
 	  final : '</div></nav>', 
+	  settings : '<ul class="nav navbar-nav"><li class="active"><a href="../settings/settings.html">Settings</a></li></ul>',
 	  
 	  LoadMenuNoConnection: function(){
 		 var finalMenu = this.inicio+
@@ -35,6 +36,7 @@ var MenuManager={
 			 					this.juegoBar+
 			 					this.rankingBar+
 			 						this.inicioDerecha+
+			 						this.settings+
 			 						'<li><a>Conectado:</a></li>'+
 			 						'<li><button class="btn btn-danger navbar-btn">'+nick+'</button></li>'+
 			 							this.desconectarseBar+

@@ -36,9 +36,9 @@ public class Tablero {
 		
 		// Posada, pozo, laberinto y cárcel
 		this.casillas[18].setTurnosSinTirar(3); this.casillas[18].setMensaje(" la posada");
-		this.casillas[31].setTurnosSinTirar(3); this.casillas[31].setMensaje(" el pozo");
+		this.casillas[30].setTurnosSinTirar(3); this.casillas[30].setMensaje(" el pozo");
 		this.casillas[41].setTurnosSinTirar(3); this.casillas[41].setMensaje(" el laberinto");
-		this.casillas[51].setTurnosSinTirar(3); this.casillas[41].setMensaje(" la carcel");
+		this.casillas[51].setTurnosSinTirar(3); this.casillas[51].setMensaje(" la carcel");
 	}
 
 	public Casilla[] getCasillas() {
