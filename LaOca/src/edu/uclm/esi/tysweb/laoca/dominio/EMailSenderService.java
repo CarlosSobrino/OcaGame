@@ -11,6 +11,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.sun.net.httpserver.HttpServer;
+
 public class EMailSenderService {
 	private final Properties properties = new Properties();
 	private String smtpHost, startTTLS, port;
@@ -38,11 +40,12 @@ public class EMailSenderService {
         Session session = Session.getInstance(properties, auth);
 
         MimeMessage msg = new MimeMessage(session);
-        msg.setSubject("LaOca - recuperaciÃ³n de contraseÃ±a");
-        msg.setText("Pulsa en el siguiente enlace para crear una nueva contraseÃ±a: http://...../crearpwd.jsp?code=" + codigo);
+        msg.setSubject("LaOca - recuperación de contraseña");
+        msg.setText("Pulsa en el siguiente enlace para crear una nueva contraseña: http://localhost:8080/LaOca/login/crearpwd.jsp?code=" + codigo);
         msg.setFrom(new InternetAddress(this.remitente));
         msg.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
         Transport.send(msg);
+        Manager.get().addRecoverCodePwd(codigo, destinatario);
 	}
 	
 	private class autentificadorSMTP extends javax.mail.Authenticator {

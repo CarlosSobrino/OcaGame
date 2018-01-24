@@ -14,6 +14,7 @@
 		} else {
 			User usuario = Manager.get().jugarSinRegistrar(nick);
 			if (usuario != null) {
+				usuario.setNick(nick);
 				session.setAttribute("user", usuario);
 				respuesta.put("result", "OK");
 				respuesta.put("mensaje", nick + " conectado");

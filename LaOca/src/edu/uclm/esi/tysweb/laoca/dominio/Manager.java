@@ -3,6 +3,8 @@ package edu.uclm.esi.tysweb.laoca.dominio;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.xml.bind.ParseConversionEvent;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,11 +15,13 @@ public class Manager {
 	private ConcurrentHashMap<String, User> usuarios;
 	private ConcurrentHashMap<String, Sala> salasPendientes;
 	private ConcurrentHashMap<String, Sala> salasEnJuego;
+	private ConcurrentHashMap<Long, String> codePwd;
 
 	private Manager(){
 		this.usuarios = new ConcurrentHashMap<>();
 		this.salasPendientes = new ConcurrentHashMap<>();
 		this.salasEnJuego = new ConcurrentHashMap<>();
+		this.codePwd = new ConcurrentHashMap<>();
 	}
 
 	public ConcurrentHashMap<String, User> getUsuarios() {
@@ -146,5 +150,19 @@ public class Manager {
 			System.out.println(e.getMessage());
 		}
 		return salas_data;
+	}
+	
+	public void addRecoverCodePwd(long codigo,String email) {
+		this.codePwd.put(codigo, email);
+	}
+	public void changeRecoverCodePwd(String code,String pwd) {
+		Long aux = Long.parseLong(code);
+		String email = this.codePwd.remove(aux);
+		try {
+			DAOUser.changePasswordEmail(email, pwd);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

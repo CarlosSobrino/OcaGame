@@ -32,6 +32,12 @@ public class User {
 	}
 	public void setScore(int score) {
 		this.score = score;
+		if(email != null)
+			try {
+				DAOUser.changeScore(this.email, score);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 	public String getNick() {
 		return nick;

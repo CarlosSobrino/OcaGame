@@ -9,16 +9,16 @@
 <body>
 	<%
 		String email = request.getParameter("email_forget");
-		if(email==null){	
 	%>
 
-	<form action="SolicitarPwd.jsp" method="GET">
+	<form action="solicitarPwd.jsp" method="GET">
 		<input type="text" placeholder="Correo electronico" name="email_forget"> <br>
-		<input type="file" placeholder="Selecciona tu foto" name="foto" accept="image/x-png,image/gif,image/jpeg"> <br>
 		<button type = "submit">Enviar</button>
 	</form>
 	
 	<%
+	if(email==null){	
+		out.print("Introduzca un email");
 		} else{
 			try{
 				enviarToken(email);

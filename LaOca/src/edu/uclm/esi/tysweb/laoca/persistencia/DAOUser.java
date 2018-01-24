@@ -131,8 +131,7 @@ public class DAOUser {
 		criteria.append("email", new BsonString(email));
 		
 		BsonDocument updateCirteria = new BsonDocument();
-		updateCirteria.append("score", new BsonInt32(score));
-		
+		updateCirteria.append("$set",new BsonDocument("score", new  BsonInt32(score)));
 		
 		MongoDatabase db = db_client.getDatabase("LaOca");
 		MongoCollection<BsonDocument> users = db.getCollection("users",BsonDocument.class);
@@ -184,5 +183,21 @@ public class DAOUser {
 			throw e;
 		}
 
+	}
+
+	public static void changePasswordEmail(String email, String pwd) throws Exception {
+		MongoClient db_client =  MongoBroker.get().getBD();
+		//Check if the user exists before insert
+		BsonDocument criteria = new BsonDocument();
+		criteria.append("email", new BsonString(email));
+		
+		BsonDocument updateCirteria = new BsonDocument();
+		
+		updateCirteria.append("$set",new BsonDocument("pwd", new BsonString(pwd)));
+		
+		MongoDatabase db = db_client.getDatabase("LaOca");
+		MongoCollection<BsonDocument> users = db.getCollection("users",BsonDocument.class);
+		users.updateOne(criteria, updateCirteria);
+		MongoBroker.get().close(db_client);
 	}
 }
