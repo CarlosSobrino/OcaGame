@@ -95,13 +95,13 @@ public class Manager {
 		return  user;
 	}
 
-	public boolean jugarSinRegistrar(String nick) throws Exception{
+	public User jugarSinRegistrar(String nick) throws Exception{
 		User user = null;
-		if (!usuarios.containsKey(nick)) {
+		if (!usuarios.containsKey(nick) && !DAOUser.checkNick(nick)) {
 			user = new UserUnregistered(nick);
 			usuarios.put(nick, user);
 		}
-		return user != null;
+		return user;
 	}
 
 	public boolean changePassword(String email,String pwd,String newPassword) throws Exception{

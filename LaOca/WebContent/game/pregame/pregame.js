@@ -29,7 +29,7 @@ function sendNick(nick){
 		if(request.readyState === 4){
 			var respuesta = JSON.parse(request.responseText);
 			if(respuesta.result ==="OK"){
-				 //conetar web socket
+				WSManager.connect();
 				remove("div_pregame");
 				SalasManager.ShowSalasDiv();
 			}else{
