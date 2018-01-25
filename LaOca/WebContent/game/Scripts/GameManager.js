@@ -1,6 +1,7 @@
 "use strict";
 var gameInstance = null;
 var _player=1;
+var _permitirDado = false;
 var GameManager= {
 		MoveFicha:function(in_player,dado){
 			var data = in_player +"\n"+dado
@@ -10,6 +11,7 @@ var GameManager= {
 			gameInstance.SendMessage ('GameManager', 'StartGame');
 		},
 		PermitirDado:function(){
+			_permitirDado = true;
 			gameInstance.SendMessage ('GameManager', 'PermitirDado');
 		},
 		ActualizarInfoTablero:function(player1,player2,player3,player4){
@@ -29,6 +31,7 @@ var GameManager= {
 			setTimeout(function(){
 				WSManager.send("DADO_GAME",dado);
 				gameInstance.SendMessage ('GameManager', 'LanzarDadoPlayer',aleatorio);
+				_permitirDado = false;
 			}, 1300);
 		},
 		MoveCasilla:function(in_player,casilla){
@@ -51,6 +54,7 @@ var GameManager= {
 				var aleatorio = randomIntFromInterval(1,6);
 				WSManager.send("DADO_GAME",aleatorio);
 				gameInstance.SendMessage ('GameManager', 'LanzarDadoPlayer',aleatorio);
+				_permitirDado = false;
 			}, 1300);
 
 		},
