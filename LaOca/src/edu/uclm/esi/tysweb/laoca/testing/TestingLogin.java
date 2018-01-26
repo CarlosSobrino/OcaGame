@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TestingLogin {
@@ -14,41 +15,53 @@ public class TestingLogin {
 
   @Before
   public void setUp() throws Exception {
-    driver = new FirefoxDriver();
+	 System.setProperty("webdriver.chrome.driver","C:\\Users\\Paco Lopez\\eclipse-workspace\\TySysWeb\\CopiaLaOca\\chromedriver.exe" ); 
+	driver = new ChromeDriver();
+    //driver = new FirefoxDriver();
     baseUrl = "http://localhost:8080/";
-    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testIngLogin() throws Exception {
-    driver.get(baseUrl + "LaOca/index/index.html");
-    driver.findElement(By.linkText("Inicio")).click();
-    driver.findElement(By.linkText("Registrarse")).click();
-    driver.findElement(By.id("email")).clear();
-    driver.findElement(By.id("email")).sendKeys("testing");
-    driver.findElement(By.id("pwd1")).clear();
-    driver.findElement(By.id("pwd1")).sendKeys("testing");
-    driver.findElement(By.id("pwd2")).clear();
-    driver.findElement(By.id("pwd2")).sendKeys("testing");
-    driver.findElement(By.id("nick")).clear();
-    driver.findElement(By.id("nick")).sendKeys("testing");
-    driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
-    assertEquals("La Oca", driver.getTitle());
-    driver.findElement(By.linkText("Desconectarse")).click();
-    driver.findElement(By.linkText("Identificarse")).click();
-    driver.findElement(By.id("email")).clear();
-    driver.findElement(By.id("email")).sendKeys("testing_failure");
-    driver.findElement(By.id("pwd")).clear();
-    driver.findElement(By.id("pwd")).sendKeys("testing");
-    driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
-    assertEquals("Email o contraseÃ±a incorrectos", closeAlertAndGetItsText());
-    assertEquals("Identificarse", driver.getTitle());
-    driver.findElement(By.id("email")).clear();
-    driver.findElement(By.id("email")).sendKeys("testing");
-    driver.findElement(By.id("pwd")).clear();
-    driver.findElement(By.id("pwd")).sendKeys("testing");
-    driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
-    assertEquals("La Oca", driver.getTitle());
+  public void testIngLogin() {
+    try {
+		driver.get(baseUrl + "LaOca/index/index.html");
+		driver.findElement(By.linkText("Inicio")).click();
+		driver.findElement(By.linkText("Registrarse")).click();
+		System.out.println("Hasta aqui llegamos");
+		driver.findElement(By.id("email")).clear();
+		driver.findElement(By.id("email")).sendKeys("testing");
+		System.out.println("Hemos enviado email");
+		driver.findElement(By.id("pwd1")).clear();
+		driver.findElement(By.id("pwd1")).sendKeys("testing");
+		System.out.println("Contraseña 1");
+		driver.findElement(By.id("pwd2")).clear();
+		driver.findElement(By.id("pwd2")).sendKeys("testing");
+		System.out.println("Contraseña 2");
+		driver.findElement(By.id("nick")).clear();
+		driver.findElement(By.id("nick")).sendKeys("testing");
+		System.out.println("nick");
+		driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
+		assertEquals("La Oca", driver.getTitle());
+		driver.findElement(By.linkText("Desconectarse")).click();
+		driver.findElement(By.linkText("Identificarse")).click();
+		driver.findElement(By.id("email")).clear();
+		driver.findElement(By.id("email")).sendKeys("testing_failure");
+		driver.findElement(By.id("pwd")).clear();
+		driver.findElement(By.id("pwd")).sendKeys("testing2");
+		driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
+		assertEquals("Email o contraseña incorrectos", closeAlertAndGetItsText());
+		assertEquals("Identificarse", driver.getTitle());
+		driver.findElement(By.id("email")).clear();
+		driver.findElement(By.id("email")).sendKeys("testing2");
+		driver.findElement(By.id("pwd")).clear();
+		driver.findElement(By.id("pwd")).sendKeys("testing2");
+		driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
+		assertEquals("La Oca", driver.getTitle());
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
   }
 
   @After
