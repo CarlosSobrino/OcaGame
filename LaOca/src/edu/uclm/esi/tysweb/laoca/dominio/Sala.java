@@ -26,7 +26,7 @@ public class Sala {
 	public Sala(User creador,String nameSala) {
 		this.players = new ConcurrentHashMap<>();
 		players.put(1,creador);
-		this.playersToBeReady=4;
+		this.playersToBeReady=2;
 		this.tablero=new Tablero();
 		this.nameSala = nameSala;
 		creador.setState(StateUser.INSIDE_SALA);
@@ -133,7 +133,7 @@ public class Sala {
 	public void tirarDado(User user, int dado) throws Exception {
 		if (user!=getJugadorConElTurno()) //Si no tiene el turno devuelve error
 			throw new Exception("No tienes el turno");
-		Thread.sleep(2000); //Espera de 1 segundo para que pueda aparecer bien la información en todos los tableros
+		Thread.sleep(2000); //Espera de 1 segundo para que pueda aparecer bien la informaciï¿½n en todos los tableros
 		Casilla destino=this.tablero.tirarDado(user, dado);
 		Casilla siguiente=destino.getSiguiente();	
 		this.tablero.moverAJugador(user, destino); //Mueve al jugador
@@ -156,7 +156,7 @@ public class Sala {
 			}
 		}
 		if (user.getCasilla().getPos()==57) { // Muerte
-			sendMsg(user.getNick()+" ha caído en la casilla de muerte,vuelve a la casilla 0");
+			sendMsg(user.getNick()+" ha caido en la casilla de muerte,vuelve a la casilla 0");
 			this.tablero.moverAJugador(user, this.tablero.getCasillas()[0]);
 			nextTurno();
 			return;
@@ -210,7 +210,7 @@ public class Sala {
 	private void nextTurno() {
 		int next=this.jugadorConElTurno;
 		next= next + 1;
-		if(next>4) next=1;
+		if(next>playersToBeReady) next=1;
 		System.out.println("Cambio de turno de :"+this.jugadorConElTurno+" a :"+next);
 		setTurnoAndSend(next);
 	}
