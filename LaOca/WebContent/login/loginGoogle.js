@@ -6,6 +6,8 @@ function onSignIn(googleUser) {
   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   var login = {
 			googleId : profile.getId(),
+			email: profile.getEmail(),
+			nick: profile.getName()
 		}
 		var request = new XMLHttpRequest();
 		request.open("post", "loginGoogle.jsp");

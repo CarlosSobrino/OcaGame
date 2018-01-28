@@ -14,6 +14,7 @@ public class User {
 	private Session session;
 	private Casilla casilla;
 	private int turnosSinTirar;
+	private boolean googleUser;
 	public enum StateUser {
 	    WAITING_SALA, CONNECTED, DISCONECTED, INSIDE_SALA,
 	    PLAYING,READY
@@ -50,13 +51,20 @@ public class User {
 	public User(String email) {
 		this.email = email;
 		this.state = StateUser.CONNECTED;
+		this.googleUser =false;
 	}
 	public User(String email, String pwd) {
 		this.email = email;
 		this.pwd = pwd;
 		this.state = StateUser.CONNECTED;
+		this.googleUser = false;
 	}
-	
+	 public void googleUser() {
+		 this.googleUser = true;
+	 }
+	 public boolean getGoogle() {
+		 return this.googleUser;
+	 }
 	public User() {
 		// TODO Auto-generated constructor stub
 	}

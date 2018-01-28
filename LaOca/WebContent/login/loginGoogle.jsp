@@ -8,18 +8,22 @@ JSONObject jso=new JSONObject(login);
 JSONObject respuesta=new JSONObject();
 try {
 	String googleId=jso.getString("googleId");
-	
-	/*
+	String email = jso.getString("email");
+	String nick = jso.getString("nick");
+	//Comprobar id de google
+	User user = new User(email);
 	if(user != null){
+		user.setNick(nick);
+		user.googleUser();
+		Manager.get().getUsuarios().put(nick, user);
 		session.setAttribute("user", user);
 		respuesta.put("result", "OK");
 		respuesta.put("mensaje", email + " conectado");
+		respuesta.put("google", user.getGoogle());
 	}else{
 		respuesta.put("result", "ERROR");
-		respuesta.put("mensaje", "Email o contraseña incorrectos");
-	}*/
-	//User usuario=Manager.get().login(email, pwd, tipoDeBroker);
-	//session.setAttribute("usuario", usuario);
+		respuesta.put("mensaje", "Fallo al logearse");
+	}
 
 }
 catch (Exception e) {

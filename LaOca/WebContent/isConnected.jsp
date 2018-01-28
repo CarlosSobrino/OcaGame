@@ -10,6 +10,7 @@
 	else{
 		jso.put("result", "OK");
 		jso.put("nick", usuario.getNick());
+		jso.put("google",usuario.getGoogle());
 	}
 
 	out.print(jso.toString());

@@ -14,6 +14,7 @@ var ConnectionManager={
 				if (respuesta.result==="OK") {
 					connected = true;
 					nick=respuesta.nick;
+					google_user = respuesta.google;
 				}
 				flag=true;
 			}
@@ -36,7 +37,6 @@ var ConnectionManager={
 	},
 	
 	logoutGoogle: function() {
-		alert("desconectado google");
 		ConnectionManager.logout();
 		/*
 	      var auth2 = gapi.auth2.getAuthInstance();
