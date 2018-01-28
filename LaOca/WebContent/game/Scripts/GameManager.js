@@ -29,7 +29,8 @@ var GameManager= {
 		TirarDadoNumero:function(dado){
 			GameManager.GirarDado();
 			setTimeout(function(){
-				WSManager.send("DADO_GAME",dado);
+				var aleatorio = dado;
+				WSManager.send("DADO_GAME",aleatorio);
 				gameInstance.SendMessage ('GameManager', 'LanzarDadoPlayer',aleatorio);
 				_permitirDado = false;
 			}, 1300);
@@ -49,6 +50,7 @@ var GameManager= {
 			},1300);
 		},
 		TirarDadoButton:function(){
+			//var tiradas = ['4', '3', '3', '1', '1', '4', '4', '1', '5', '3', '2', '1', '4', '5', '5', '5', '1', '6', '1', '2', '4', '1'];
 			GameManager.GirarDado();
 			setTimeout(function(){
 				var aleatorio = randomIntFromInterval(1,6);
