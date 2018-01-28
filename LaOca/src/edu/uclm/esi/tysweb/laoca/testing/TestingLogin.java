@@ -15,7 +15,7 @@ public class TestingLogin {
 
   @Before
   public void setUp() throws Exception {
-	 System.setProperty("webdriver.chrome.driver","C:\\Users\\Paco Lopez\\eclipse-workspace\\TySysWeb\\CopiaLaOca\\chromedriver.exe" ); 
+	 System.setProperty("webdriver.chrome.driver","chromedriver.exe" ); 
 	driver = new ChromeDriver();
     //driver = new FirefoxDriver();
     baseUrl = "http://localhost:8080/";
