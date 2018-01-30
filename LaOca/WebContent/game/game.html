@@ -49,6 +49,21 @@
   <!-- CHAT -->
   <div id="div_chat"> </div>
   <!-- GAME -->
+  <div class="botonTestjuego"><button class="botonTjuego" onclick="tirardadotest()">TirarDadoTest</button><input class = "testjuego" type="number" id="numeroTest"></div>
   <div class="webgl-content" id="div_game"></div>
   </body>
+ <script type="text/javascript">
+ function tirardadotest(){
+	 var numero=parseInt(document.getElementById("numeroTest").value);
+	 GameManager.TirarDadoNumero(numero);
+	 
+ }
+ </script>
+ <style type="text/css">
+  .botonTestjuego{
+  }
+  .botonTjuego{
+  
+  }
+  </style>
 </html>

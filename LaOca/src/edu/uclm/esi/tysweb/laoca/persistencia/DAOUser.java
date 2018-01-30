@@ -61,7 +61,7 @@ public class DAOUser {
 
 		if(!checkExistUser(email, pwd, db_client)) { //Si el usuario no existe
 			MongoBroker.get().close(db_client);
-			throw new Exception("Email o contraseña incorrectos");
+			throw new Exception("Email o contraseï¿½a incorrectos");
 		}
 		UserRegistered user = new UserRegistered(email,pwd);
 		user.setNick(getNick(email, db_client));
@@ -103,7 +103,7 @@ public class DAOUser {
 		//Check if the user exists before insert
 		if(!checkExistUser(user.getEmail(),user.getPwd(),db_client)) {
 			MongoBroker.get().close(db_client);
-			throw new Exception("Email o contraseña incorrecto");
+			throw new Exception("Email o contraseï¿½a incorrecto");
 		}
 		BsonDocument criteria = new BsonDocument();
 		criteria.append("email", new BsonString(user.getEmail()));
@@ -124,7 +124,7 @@ public class DAOUser {
 		//Check if the user exists before insert
 		if(!checkExistUser(email,null,db_client)) {
 			MongoBroker.get().close(db_client);
-			throw new Exception("Error al actualizar puntuación, email incorrecto");
+			throw new Exception("Error al actualizar puntuacion, email incorrecto");
 		}
 		
 		BsonDocument criteria = new BsonDocument();

@@ -27,7 +27,7 @@ var GameManager= {
 			  openChat();
 		},
 		TirarDadoNumero:function(dado){
-			GameManager.GirarDado();
+			//GameManager.GirarDado();
 			setTimeout(function(){
 				var aleatorio = dado;
 				WSManager.send("DADO_GAME",aleatorio);

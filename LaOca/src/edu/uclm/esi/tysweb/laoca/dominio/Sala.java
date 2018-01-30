@@ -65,7 +65,7 @@ public class Sala {
 	public void StartGame() {
 		sendInfoGame();
 		sendRolGame();
-		this.jugadorConElTurno=(new Random()).nextInt(this.players.size())+1;
+		this.jugadorConElTurno=1;
 		setTurnoAndSend(this.jugadorConElTurno);
 	}
 	private void setTurnoAndSend(int player) {
@@ -79,9 +79,9 @@ public class Sala {
 		}
 		this.jugadorConElTurno=player;
 		User user=players.get(jugadorConElTurno);
-		if(user.getTurnosSinTirar() > 0){ //Si esta penalizado pasa turno al siguiente
-			sendMsg(user.getNick()+" tiene que estar sin tirar "+user.getTurnosSinTirar());
+		if(user.getTurnosSinTirar() > 1){ //Si esta penalizado pasa turno al siguiente
 			user.setTurnosSinTirar(user.getTurnosSinTirar()-1);
+			sendMsg(user.getNick()+" tiene que estar sin tirar "+user.getTurnosSinTirar());	
 			nextTurno();
 		}else { //Envia el turno del jugador que le toca
 			JSONObject jso=new JSONObject();
