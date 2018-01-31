@@ -46,6 +46,7 @@ public class Sala {
 	public boolean isCompleted() {
 		return this.players.size()==this.playersToBeReady;
 	}
+	
 	public boolean isReady() {
 		if(!isCompleted()) return false;
 		for(int j=1;j<=this.players.size();j++) {
@@ -59,7 +60,6 @@ public class Sala {
 		}
 		StartGame();
 		return true;
-		
 	}
 
 	public void StartGame() {
